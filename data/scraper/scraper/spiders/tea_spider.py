@@ -30,6 +30,7 @@ class TeaSpider(scrapy.Spider):
             'brand': extract_with_css('span[itemprop=brand] span[itemprop=name]::text'),
             'reviewCount': extract_with_css('meta[itemprop=reviewCount]::attr(content)'),
             'ratingValue': extract_with_css('div[itemprop=ratingValue]::text'),
+            'teaType': extract_with_css('dl.tea-description dd a::text'),
             'ingredients': tea_array[0],
             'flavors': tea_array[1],
             'soldIn': tea_array[2],
@@ -37,6 +38,6 @@ class TeaSpider(scrapy.Spider):
             'certification': tea_array[4],
             'wantIt': extract_with_css('section[id=want-user-images] h3::text').replace(" Want it", ""),
             'ownIt': extract_with_css('section[id=have-user-images] h3::text').replace(" Own it", ""),
+            'imageUrl': extract_with_css('div.tea-image img[itemprop=image]::attr(src)'),
             'url': response.url
         }
-        # TODO: Get tea image
