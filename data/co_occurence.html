@@ -11773,7 +11773,7 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -11788,11 +11788,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">tea_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;scraper/clean_data.csv&quot;</span><span class="p">)</span>
-<span class="n">tea_df</span>
+<span class="n">tea_df</span><span class="p">[</span><span class="s1">&#39;flavors&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -11805,1087 +11805,18 @@ div#notebook {
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[8]:</div>
+<div class="prompt output_prompt">Out[2]:</div>
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>id</th>
-      <th>name</th>
-      <th>brand</th>
-      <th>reviewCount</th>
-      <th>ratingValue</th>
-      <th>teaType</th>
-      <th>ingredients</th>
-      <th>flavors</th>
-      <th>soldIn</th>
-      <th>caffeine</th>
-      <th>certification</th>
-      <th>wantIt</th>
-      <th>ownIt</th>
-      <th>imageUrl</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>65303</td>
-      <td>2015 Last Thoughts</td>
-      <td>White 2 Tea</td>
-      <td>16.0</td>
-      <td>89.0</td>
-      <td>Pu-erh Tea</td>
-      <td>Not available</td>
-      <td>Floral, Rainforest, Honeysuckle, Orchids, Pepp...</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>51.0</td>
-      <td>20.0</td>
-      <td>https://media.steepster.com/api/file/kL8dCqJrT...</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>43095</td>
-      <td>Golden Orchid</td>
-      <td>Whispering Pines Tea Company</td>
-      <td>155.0</td>
-      <td>89.0</td>
-      <td>Black Tea</td>
-      <td>Fujian Xiao Zhong, Vanilla Bean, Yunnan Dian Hong</td>
-      <td>Dark Chocolate, Chocolate, Dates, Malt, Orchid...</td>
-      <td>Loose Leaf</td>
-      <td>High</td>
-      <td>Not available</td>
-      <td>315.0</td>
-      <td>236.0</td>
-      <td>https://media.steepster.com/api/file/exT0OHWdT...</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>78801</td>
-      <td>The Silver Moonlight</td>
-      <td>Chai &amp; Mighty</td>
-      <td>6.0</td>
-      <td>89.0</td>
-      <td>White Tea</td>
-      <td>White Tea Leaves</td>
-      <td>Honey, Lemon, Nuts, Flowers, Lemongrass</td>
-      <td>Loose Leaf</td>
-      <td>Low</td>
-      <td>Fair Trade, Organic, Vegan</td>
-      <td>3.0</td>
-      <td>4.0</td>
-      <td>https://media.steepster.com/api/file/cmNMAbwSn...</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>48058</td>
-      <td>Cocoa Amore</td>
-      <td>Whispering Pines Tea Company</td>
-      <td>85.0</td>
-      <td>89.0</td>
-      <td>Black Tea</td>
-      <td>Chinese Black Tea, Tahitian Vanilla</td>
-      <td>Cocoa, Dark Chocolate, Malt, Vanilla, Apple, A...</td>
-      <td>Loose Leaf</td>
-      <td>High</td>
-      <td>Not available</td>
-      <td>227.0</td>
-      <td>156.0</td>
-      <td>https://media.steepster.com/api/file/0vAf5X4Si...</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>32444</td>
-      <td>Laoshan Bilochun Green</td>
-      <td>Verdant Tea</td>
-      <td>19.0</td>
-      <td>89.0</td>
-      <td>Green Tea</td>
-      <td>Not available</td>
-      <td>Sweet, Mineral, Nutty, Roasted, Salty, Butter,...</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>11.0</td>
-      <td>21.0</td>
-      <td>https://media.steepster.com/api/file/F0AJQO5DT...</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>22442</td>
-      <td>Milk Oolong Tea</td>
-      <td>Mandala Tea</td>
-      <td>116.0</td>
-      <td>89.0</td>
-      <td>Oolong Tea</td>
-      <td>Not available</td>
-      <td>Apricot, Creamy, Mango, Milk, Smooth, Stonefru...</td>
-      <td>Loose Leaf</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>314.0</td>
-      <td>127.0</td>
-      <td>https://media.steepster.com/api/file/Hat4DLjkT...</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>78800</td>
-      <td>The Queen of Greens</td>
-      <td>Chai &amp; Mighty</td>
-      <td>12.0</td>
-      <td>89.0</td>
-      <td>Green Tea</td>
-      <td>Green Tea Leaves</td>
-      <td>Broccoli, Cut grass, Nutty, Olives, Freshly Cu...</td>
-      <td>Bulk, Loose Leaf</td>
-      <td>Low</td>
-      <td>Fair Trade, Organic, Vegan</td>
-      <td>8.0</td>
-      <td>2.0</td>
-      <td>https://media.steepster.com/api/file/jVMEypgaQ...</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>20060</td>
-      <td>Hand Picked Tieguanyin Spring Oolong (2011)</td>
-      <td>Verdant Tea</td>
-      <td>80.0</td>
-      <td>89.0</td>
-      <td>Oolong Tea</td>
-      <td>Oolong Tea</td>
-      <td>Citrus Zest, Cream, Toasted Rice, Tobacco, Sug...</td>
-      <td>Loose Leaf</td>
-      <td>Medium</td>
-      <td>Not available</td>
-      <td>140.0</td>
-      <td>142.0</td>
-      <td>https://media.steepster.com/api/file/84cnuVtQM...</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>28779</td>
-      <td>Premium Taiwanese Assam</td>
-      <td>Butiki Teas</td>
-      <td>127.0</td>
-      <td>89.0</td>
-      <td>Black Tea</td>
-      <td>Black Tea Leaves</td>
-      <td>Tea, Chocolate, Cream, Cocoa, Fruity, Malt, Br...</td>
-      <td>Loose Leaf</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>256.0</td>
-      <td>190.0</td>
-      <td>https://media.steepster.com/api/file/eXa2B8fyR...</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>41785</td>
-      <td>Imperial Gold Needle Yunnan Black Tea</td>
-      <td>Yunnan Sourcing</td>
-      <td>25.0</td>
-      <td>89.0</td>
-      <td>Black Tea</td>
-      <td>Not available</td>
-      <td>Chocolate, Cocoa, Malt, Melon, Plums, Sweet Po...</td>
-      <td>Loose Leaf</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>40.0</td>
-      <td>33.0</td>
-      <td>https://media.steepster.com/api/file/grfipnEHQ...</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>21629</td>
-      <td>Yun Nan Dian Hong Black Tea – Golden Tip</td>
-      <td>Teavivre</td>
-      <td>153.0</td>
-      <td>89.0</td>
-      <td>Black Tea</td>
-      <td>Not available</td>
-      <td>Apricot, Dust, Flowers, Honey, Peach, Chocolat...</td>
-      <td>Bulk</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>100.0</td>
-      <td>91.0</td>
-      <td>https://media.steepster.com/api/file/aZui9UXVR...</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>40986</td>
-      <td>L'Automne</td>
-      <td>Fauchon</td>
-      <td>11.0</td>
-      <td>89.0</td>
-      <td>Rooibos Tea</td>
-      <td>Not available</td>
-      <td>Orange, Chocolate, Orange Zest</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>31.0</td>
-      <td>9.0</td>
-      <td>https://media.steepster.com/api/file/eIL6TKM1T...</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>35881</td>
-      <td>Laoshan Black Chocolate Genmaicha</td>
-      <td>Verdant Tea</td>
-      <td>75.0</td>
-      <td>89.0</td>
-      <td>Black Oolong Blend</td>
-      <td>Not available</td>
-      <td>Chocolate, Cocoa, Nutty, Pastries, Roasted, To...</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>95.0</td>
-      <td>57.0</td>
-      <td>https://media.steepster.com/api/file/K42BDbihR...</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>8188</td>
-      <td>Golden Honey Dew</td>
-      <td>Lupicia</td>
-      <td>64.0</td>
-      <td>89.0</td>
-      <td>Rooibos Tea</td>
-      <td>Green Rooibos, Honeydew, Marigold Flowers</td>
-      <td>Honey Dew, Green Melons, Honeydew, Melon, Roas...</td>
-      <td>Loose Leaf, Sachet</td>
-      <td>Caffeine Free</td>
-      <td>Not available</td>
-      <td>61.0</td>
-      <td>52.0</td>
-      <td>https://media.steepster.com/api/file/Maw17OSTc...</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>48327</td>
-      <td>2002 CNNP Little Yellow Mark Private Order Age...</td>
-      <td>White2Tea</td>
-      <td>15.0</td>
-      <td>89.0</td>
-      <td>Pu-erh Tea</td>
-      <td>Green Tea Leaves</td>
-      <td>Cinnamon, Nutmeg, Spices, Stonefruits, Candy, ...</td>
-      <td>Bulk</td>
-      <td>Medium</td>
-      <td>Not available</td>
-      <td>12.0</td>
-      <td>19.0</td>
-      <td>https://media.steepster.com/api/file/143Rg58RR...</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>38774</td>
-      <td>Mandala Noble Mark Ripe Cake - 2012</td>
-      <td>Mandala Tea</td>
-      <td>28.0</td>
-      <td>89.0</td>
-      <td>Pu-erh Tea</td>
-      <td>Not available</td>
-      <td>Brown Sugar, Cinnamon, Molasses, Mushrooms, Va...</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>33.0</td>
-      <td>31.0</td>
-      <td>https://media.steepster.com/api/file/aubPAZH7S...</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>19426</td>
-      <td>Ye Sheng Wild White</td>
-      <td>Canton Tea Co</td>
-      <td>10.0</td>
-      <td>89.0</td>
-      <td>White Tea</td>
-      <td>Not available</td>
-      <td>Flowers, Grapes, Vegetal</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>15.0</td>
-      <td>8.0</td>
-      <td>https://media.steepster.com/api/file/VnII7jJUR...</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>27861</td>
-      <td>250 gram Mandala Wild Mountain Green Raw-2011</td>
-      <td>Mandala Tea</td>
-      <td>11.0</td>
-      <td>89.0</td>
-      <td>Pu-erh Tea</td>
-      <td>Not available</td>
-      <td>Flowers, Lettuce, Camphor, Honeysuckle, Olive ...</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>5.0</td>
-      <td>16.0</td>
-      <td>https://media.steepster.com/api/file/TbuhHf7AQ...</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>32867</td>
-      <td>Superfine Tan Yang Gong Fu Black Tea</td>
-      <td>Teavivre</td>
-      <td>65.0</td>
-      <td>89.0</td>
-      <td>Black Tea</td>
-      <td>Not available</td>
-      <td>Alcohol, Anise, Apple, Black Currant, Blackber...</td>
-      <td>Loose Leaf</td>
-      <td>Not available</td>
-      <td>Fair Trade</td>
-      <td>32.0</td>
-      <td>43.0</td>
-      <td>https://media.steepster.com/api/file/ak7gWH6GQ...</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>48691</td>
-      <td>Rivendell</td>
-      <td>Whispering Pines Tea Company</td>
-      <td>24.0</td>
-      <td>89.0</td>
-      <td>Oolong Tea</td>
-      <td>Oolong Tea, Tahitian Vanilla, Wildcrafted Roas...</td>
-      <td>Butterscotch, Creamy, Flowers, Fruit Tree Flow...</td>
-      <td>Loose Leaf</td>
-      <td>Medium</td>
-      <td>Not available</td>
-      <td>113.0</td>
-      <td>23.0</td>
-      <td>https://media.steepster.com/api/file/cLjVJp8rQ...</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>41171</td>
-      <td>Hello Sweetie</td>
-      <td>Butiki Teas</td>
-      <td>73.0</td>
-      <td>89.0</td>
-      <td>Black Tea</td>
-      <td>Not available</td>
-      <td>Coconut, Cream, Creamy, Fruity, Malt, Milk, Sm...</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>110.0</td>
-      <td>55.0</td>
-      <td>https://media.steepster.com/api/file/b4ZgPkFhR...</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>29244</td>
-      <td>Wild Monk Sheng Pu'er (2012)</td>
-      <td>Mandala Tea</td>
-      <td>50.0</td>
-      <td>89.0</td>
-      <td>Pu-erh Tea</td>
-      <td>Not available</td>
-      <td>Tobacco, Fruity, Smoke, Sweet, Wood, Apricot, ...</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>152.0</td>
-      <td>83.0</td>
-      <td>https://media.steepster.com/api/file/sKj8iB9TV...</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>28778</td>
-      <td>Mi Xian Black</td>
-      <td>Butiki Teas</td>
-      <td>59.0</td>
-      <td>89.0</td>
-      <td>Black Tea</td>
-      <td>Not available</td>
-      <td>Caramel, Chocolate, Cream, Floral, Fruity, Gra...</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>53.0</td>
-      <td>43.0</td>
-      <td>https://media.steepster.com/api/file/TOwBmaJHT...</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>22253</td>
-      <td>Cantaloupe and Cream</td>
-      <td>Butiki Teas</td>
-      <td>152.0</td>
-      <td>88.0</td>
-      <td>White Tea</td>
-      <td>Natural Flavors (Vegan), Organic Bai Mu Dan, O...</td>
-      <td>Cantaloupe, Cream, Earth, Hay, Honeydew, Melon...</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>174.0</td>
-      <td>120.0</td>
-      <td>https://media.steepster.com/api/file/vLXxB7mdS...</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>45843</td>
-      <td>Crane Monk Light Oolong</td>
-      <td>Temple Road</td>
-      <td>6.0</td>
-      <td>88.0</td>
-      <td>Oolong Tea</td>
-      <td>Not available</td>
-      <td>Butter, Floral, Honeysuckle, Sweet</td>
-      <td>Loose Leaf</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>6.0</td>
-      <td>1.0</td>
-      <td>https://media.steepster.com/api/file/Ez95LK7bR...</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>4079</td>
-      <td>Emperor's Gold</td>
-      <td>The Tao of Tea</td>
-      <td>11.0</td>
-      <td>88.0</td>
-      <td>Black Tea</td>
-      <td>Not available</td>
-      <td>Apricot, Cream, Dates, Honey, Smoke</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>20.0</td>
-      <td>4.0</td>
-      <td>https://media.steepster.com/api/file/2dayAnTQF...</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>30210</td>
-      <td>Maple Pecan Oolong</td>
-      <td>Butiki Teas</td>
-      <td>100.0</td>
-      <td>89.0</td>
-      <td>Oolong Tea</td>
-      <td>Nilgiri Frost Oolong, Organic Natural Flavors ...</td>
-      <td>Butter, Maple, Maple Syrup, Cream, Creamy, Flo...</td>
-      <td>Loose Leaf</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>132.0</td>
-      <td>73.0</td>
-      <td>https://media.steepster.com/api/file/vmXahoGCR...</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>16603</td>
-      <td>Black Spiral</td>
-      <td>The Tao of Tea</td>
-      <td>7.0</td>
-      <td>88.0</td>
-      <td>Black Tea</td>
-      <td>Not available</td>
-      <td>Autumn Leaf Pile, Clay, Cocoa, Honey, Malt, Mu...</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>31.0</td>
-      <td>5.0</td>
-      <td>https://media.steepster.com/api/file/Wiwr06S4T...</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>49835</td>
-      <td>2012 Huron Gold Needle Shou Pu-erh</td>
-      <td>Whispering Pines Tea Company</td>
-      <td>14.0</td>
-      <td>88.0</td>
-      <td>Pu-erh Tea</td>
-      <td>Pu Erh Tea</td>
-      <td>Cocoa, Cream, Mineral, Moss, Forest Floor, Cho...</td>
-      <td>Loose Leaf</td>
-      <td>High</td>
-      <td>Not available</td>
-      <td>7.0</td>
-      <td>21.0</td>
-      <td>https://media.steepster.com/api/file/rujUVYq6S...</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>40346</td>
-      <td>North Winds (Old Version)</td>
-      <td>Whispering Pines Tea Company</td>
-      <td>35.0</td>
-      <td>89.0</td>
-      <td>Black Tea</td>
-      <td>Fujian Xiao Zhong, Yunnan Dian Hong</td>
-      <td>Apricot, Caramel, Chocolate, Carrot, Cocoa, Pe...</td>
-      <td>Loose Leaf</td>
-      <td>High</td>
-      <td>Not available</td>
-      <td>25.0</td>
-      <td>26.0</td>
-      <td>https://media.steepster.com/api/file/uoFgu2yRS...</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>15611</th>
-      <td>8331</td>
-      <td>Decaf Chai</td>
-      <td>Tazo</td>
-      <td>7.0</td>
-      <td>50.0</td>
-      <td>Black Chai Rooibos Blend</td>
-      <td>Not available</td>
-      <td>Black Pepper</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>2.0</td>
-      <td>12.0</td>
-      <td>https://media.steepster.com/api/file/cSTuOpROT...</td>
-    </tr>
-    <tr>
-      <th>15612</th>
-      <td>31246</td>
-      <td>Coffee Chai (organic)</td>
-      <td>DAVIDsTEA</td>
-      <td>30.0</td>
-      <td>50.0</td>
-      <td>Black Chai Blend</td>
-      <td>Not available</td>
-      <td>Cardamon, Spices</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>10.0</td>
-      <td>46.0</td>
-      <td>https://media.steepster.com/api/file/769aAiVdS...</td>
-    </tr>
-    <tr>
-      <th>15613</th>
-      <td>1197</td>
-      <td>Snow Geisha</td>
-      <td>Teavana</td>
-      <td>72.0</td>
-      <td>50.0</td>
-      <td>Fruit White Blend</td>
-      <td>Rose Buds And Petals, White Tea</td>
-      <td>Cherry, Rose, Bitter, Medicinal</td>
-      <td>Loose Leaf</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>6.0</td>
-      <td>78.0</td>
-      <td>https://media.steepster.com/api/file/2Tf1WRJdS...</td>
-    </tr>
-    <tr>
-      <th>15614</th>
-      <td>69700</td>
-      <td>Black Cherry Black</td>
-      <td>Fusion Teas</td>
-      <td>2.0</td>
-      <td>49.0</td>
-      <td>Black Fruit Blend</td>
-      <td>Apple Pieces, Black Tea, Cherry, Cranberries, ...</td>
-      <td>Artificial, Cherry, Dust, Medicinal</td>
-      <td>Loose Leaf</td>
-      <td>Not available</td>
-      <td>Organic</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>https://media.steepster.com/api/file/O6AAFm4gS...</td>
-    </tr>
-    <tr>
-      <th>15615</th>
-      <td>37446</td>
-      <td>Get Burning - Herb Tea for Metabolism</td>
-      <td>The Republic of Tea</td>
-      <td>2.0</td>
-      <td>51.0</td>
-      <td>Rooibos Tea</td>
-      <td>Basil, Black Pepper, Chili Pepper, Cinnamon, C...</td>
-      <td>Fruity, Spicy, Citrus Zest</td>
-      <td>Tea Bag</td>
-      <td>Caffeine Free</td>
-      <td>Not available</td>
-      <td>0.0</td>
-      <td>6.0</td>
-      <td>https://media.steepster.com/api/file/APi2bBJFT...</td>
-    </tr>
-    <tr>
-      <th>15616</th>
-      <td>37656</td>
-      <td>Organic Bold Leaf Pu-erh</td>
-      <td>Wegmans</td>
-      <td>7.0</td>
-      <td>51.0</td>
-      <td>Pu-erh Tea</td>
-      <td>Not available</td>
-      <td>Earth, Fishy</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>0.0</td>
-      <td>4.0</td>
-      <td>https://media.steepster.com/api/file/anN07UThR...</td>
-    </tr>
-    <tr>
-      <th>15617</th>
-      <td>46729</td>
-      <td>chrysanthemum flowers</td>
-      <td>Mountain Rose Herbs</td>
-      <td>3.0</td>
-      <td>46.0</td>
-      <td>Flowering Tea</td>
-      <td>Chrysanthemum</td>
-      <td>Floral, Grass</td>
-      <td>Bulk</td>
-      <td>Caffeine Free</td>
-      <td>Organic</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>https://media.steepster.com/api/file/UY5ItpRTj...</td>
-    </tr>
-    <tr>
-      <th>15618</th>
-      <td>9187</td>
-      <td>English Breakfast</td>
-      <td>Lipton</td>
-      <td>7.0</td>
-      <td>47.0</td>
-      <td>Black Tea</td>
-      <td>Not available</td>
-      <td>Carrot, Honey, Malt</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>1.0</td>
-      <td>3.0</td>
-      <td>https://media.steepster.com/api/file/PhZKYoVQ5...</td>
-    </tr>
-    <tr>
-      <th>15619</th>
-      <td>17804</td>
-      <td>Orzo Chai</td>
-      <td>Lupicia</td>
-      <td>3.0</td>
-      <td>47.0</td>
-      <td>Chai Herbal Blend</td>
-      <td>Not available</td>
-      <td>Bitter, Brown Toast, Cinnamon, Clove, Grain, R...</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>2.0</td>
-      <td>6.0</td>
-      <td>https://media.steepster.com/api/file/b7tevPMGS...</td>
-    </tr>
-    <tr>
-      <th>15620</th>
-      <td>74874</td>
-      <td>Nutty Granola Crunch</td>
-      <td>DAVIDsTEA</td>
-      <td>32.0</td>
-      <td>47.0</td>
-      <td>Rooibos Tea</td>
-      <td>Almonds, Apple, Brittle, Coconut, Natural And ...</td>
-      <td>Coconut, Peanut, Cardboard, Dirt, Mud, Soap, S...</td>
-      <td>Bulk, Loose Leaf, Sachet</td>
-      <td>Caffeine Free</td>
-      <td>Kosher</td>
-      <td>1.0</td>
-      <td>24.0</td>
-      <td>https://media.steepster.com/api/file/PTMrmYTxS...</td>
-    </tr>
-    <tr>
-      <th>15621</th>
-      <td>70416</td>
-      <td>Coco Caramel Sea Salt</td>
-      <td>Teavana</td>
-      <td>10.0</td>
-      <td>48.0</td>
-      <td>Herbal Tea</td>
-      <td>Not available</td>
-      <td>Ash, Burnt Sugar, Cocoa, Dark Bittersweet, Dir...</td>
-      <td>Loose Leaf</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>1.0</td>
-      <td>18.0</td>
-      <td>https://media.steepster.com/api/file/uhLtQ4RHS...</td>
-    </tr>
-    <tr>
-      <th>15622</th>
-      <td>208</td>
-      <td>White Tropics</td>
-      <td>Adagio Teas</td>
-      <td>42.0</td>
-      <td>47.0</td>
-      <td>Fruit White Blend</td>
-      <td>Not available</td>
-      <td>Pineapple, Bitter, Rose, Fruit Tree Flowers</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>1.0</td>
-      <td>33.0</td>
-      <td>https://media.steepster.com/api/file/IbZbi97Tj...</td>
-    </tr>
-    <tr>
-      <th>15623</th>
-      <td>46747</td>
-      <td>Tomato Lime Cocktail</td>
-      <td>Teavana</td>
-      <td>3.0</td>
-      <td>47.0</td>
-      <td>Fruit Herbal Blend</td>
-      <td>Apple Pieces, Beet Root Pieces, Carrot, Cinnam...</td>
-      <td>Cinnamon, Raisins</td>
-      <td>Loose Leaf</td>
-      <td>Caffeine Free</td>
-      <td>Not available</td>
-      <td>0.0</td>
-      <td>8.0</td>
-      <td>https://media.steepster.com/api/file/yBBoVT9Su...</td>
-    </tr>
-    <tr>
-      <th>15624</th>
-      <td>2</td>
-      <td>Wild Sweet Orange</td>
-      <td>Tazo</td>
-      <td>165.0</td>
-      <td>47.0</td>
-      <td>Fruit Herbal Blend</td>
-      <td>Blackberry Leaves, Citric Acid, Ginger Root, H...</td>
-      <td>Artificial, Astringent, Ginger, Hibiscus, Oran...</td>
-      <td>Tea Bag</td>
-      <td>Caffeine Free</td>
-      <td>Kosher</td>
-      <td>19.0</td>
-      <td>123.0</td>
-      <td>https://media.steepster.com/api/file/nSKo1JFeQ...</td>
-    </tr>
-    <tr>
-      <th>15625</th>
-      <td>21976</td>
-      <td>Honey Yuzu</td>
-      <td>Tea Forte</td>
-      <td>20.0</td>
-      <td>45.0</td>
-      <td>Green Tea</td>
-      <td>Not available</td>
-      <td>Citrus, Honey, Medicinal, Menthol, Vegetal, Gr...</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>1.0</td>
-      <td>11.0</td>
-      <td>https://media.steepster.com/api/file/f5RumPE5S...</td>
-    </tr>
-    <tr>
-      <th>15626</th>
-      <td>56340</td>
-      <td>Cinnamon Toast Black HiCAF™</td>
-      <td>Republic of Tea</td>
-      <td>9.0</td>
-      <td>48.0</td>
-      <td>Black Tea</td>
-      <td>Black Tea, Cinnamon, Green Tea Leaf Extract, N...</td>
-      <td>Artificial, Cinnamon, Bitter, Sweet, Apple, Ca...</td>
-      <td>Tea Bag</td>
-      <td>High</td>
-      <td>Not available</td>
-      <td>4.0</td>
-      <td>1.0</td>
-      <td>https://media.steepster.com/api/file/ng2ziDEwR...</td>
-    </tr>
-    <tr>
-      <th>15627</th>
-      <td>4879</td>
-      <td>Pumpkin Spice</td>
-      <td>Adagio Teas</td>
-      <td>71.0</td>
-      <td>48.0</td>
-      <td>Black Tea</td>
-      <td>Not available</td>
-      <td>Natural Pumpkin Spice Flavor, Pumpkin, Smooth,...</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>3.0</td>
-      <td>76.0</td>
-      <td>https://media.steepster.com/api/file/n1HASNlQy...</td>
-    </tr>
-    <tr>
-      <th>15628</th>
-      <td>17455</td>
-      <td>Cranberry Pomegranate</td>
-      <td>Stash Tea Company</td>
-      <td>11.0</td>
-      <td>48.0</td>
-      <td>Herbal Rooibos Blend</td>
-      <td>Hibiscus, Natural Cranberry Flavor, Pomegranat...</td>
-      <td>Berries, Fruity, Sour, Sweet, Berry, Fruit Pun...</td>
-      <td>Tea Bag</td>
-      <td>Caffeine Free</td>
-      <td>Not available</td>
-      <td>1.0</td>
-      <td>8.0</td>
-      <td>https://media.steepster.com/api/file/zyVKWutKQ...</td>
-    </tr>
-    <tr>
-      <th>15629</th>
-      <td>39373</td>
-      <td>Cocoa Loco</td>
-      <td>T2</td>
-      <td>7.0</td>
-      <td>48.0</td>
-      <td>Herbal Tea</td>
-      <td>Not available</td>
-      <td>Chocolate, Milk, Cocoa</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>1.0</td>
-      <td>17.0</td>
-      <td>https://media.steepster.com/api/file/15RT82dSD...</td>
-    </tr>
-    <tr>
-      <th>15630</th>
-      <td>33436</td>
-      <td>Christmas Tea</td>
-      <td>Fortnum &amp; Mason</td>
-      <td>4.0</td>
-      <td>48.0</td>
-      <td>Black Tea</td>
-      <td>Not available</td>
-      <td>Astringent, Cloves, Drying, Orange, Plums, Red...</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>0.0</td>
-      <td>6.0</td>
-      <td>https://media.steepster.com/api/file/zrMYnTBDQ...</td>
-    </tr>
-    <tr>
-      <th>15631</th>
-      <td>14194</td>
-      <td>Golden China</td>
-      <td>Pickwick</td>
-      <td>4.0</td>
-      <td>39.0</td>
-      <td>Black Flowering Blend</td>
-      <td>Black Tea, Jasmine</td>
-      <td>Bitter, Dirt, Earth, Nutty, Wood, Dust, Jasmine</td>
-      <td>Tea Bag</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>https://media.steepster.com/api/file/anN07UThR...</td>
-    </tr>
-    <tr>
-      <th>15632</th>
-      <td>5416</td>
-      <td>Green Lime</td>
-      <td>Island Rose</td>
-      <td>9.0</td>
-      <td>41.0</td>
-      <td>Fruit Green Blend</td>
-      <td>Not available</td>
-      <td>Lime</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>2.0</td>
-      <td>2.0</td>
-      <td>https://media.steepster.com/api/file/mGAcCDdTQ...</td>
-    </tr>
-    <tr>
-      <th>15633</th>
-      <td>3747</td>
-      <td>Lapsang Souchong</td>
-      <td>t Leaf T</td>
-      <td>2.0</td>
-      <td>48.0</td>
-      <td>Black Tea</td>
-      <td>Not available</td>
-      <td>Ash, Pine, Smoked, Wood</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>1.0</td>
-      <td>2.0</td>
-      <td>https://media.steepster.com/api/file/Ls27DjMSN...</td>
-    </tr>
-    <tr>
-      <th>15634</th>
-      <td>34492</td>
-      <td>Aloha Pu'erh</td>
-      <td>DAVIDsTEA</td>
-      <td>29.0</td>
-      <td>41.0</td>
-      <td>Fruit Pu-erh Blend</td>
-      <td>Natural And Artificial Flavouring, Papaya, Pin...</td>
-      <td>Creamy, Earth, Fishy, Fruity, Irish Cream, Tro...</td>
-      <td>Loose Leaf</td>
-      <td>Medium</td>
-      <td>Not available</td>
-      <td>6.0</td>
-      <td>34.0</td>
-      <td>https://media.steepster.com/api/file/Uos5GNAtR...</td>
-    </tr>
-    <tr>
-      <th>15635</th>
-      <td>438</td>
-      <td>Lipton Black Tea</td>
-      <td>Lipton</td>
-      <td>131.0</td>
-      <td>42.0</td>
-      <td>Black Tea</td>
-      <td>Not available</td>
-      <td>Astringent, Bitter, Herbs, Medicinal, Wood, Te...</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>5.0</td>
-      <td>89.0</td>
-      <td>https://media.steepster.com/api/file/PF59wMyiQ...</td>
-    </tr>
-    <tr>
-      <th>15636</th>
-      <td>16051</td>
-      <td>Mojitea</td>
-      <td>Argo Tea</td>
-      <td>7.0</td>
-      <td>44.0</td>
-      <td>Tea</td>
-      <td>Not available</td>
-      <td>Lime, Mint, Sugarcane</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>https://media.steepster.com/api/file/B1TJmsORE...</td>
-    </tr>
-    <tr>
-      <th>15637</th>
-      <td>6455</td>
-      <td>Tilleul</td>
-      <td>Harney &amp; Sons</td>
-      <td>16.0</td>
-      <td>44.0</td>
-      <td>Herbal Tea</td>
-      <td>Not available</td>
-      <td>Floral, Forest Floor, Herbaceous, Plant Stems,...</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>5.0</td>
-      <td>8.0</td>
-      <td>https://media.steepster.com/api/file/aG9ULHsTP...</td>
-    </tr>
-    <tr>
-      <th>15638</th>
-      <td>792</td>
-      <td>Decaf Crème Caramel</td>
-      <td>Stash Tea Company</td>
-      <td>15.0</td>
-      <td>44.0</td>
-      <td>Black Tea</td>
-      <td>Not available</td>
-      <td>Caramel</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>4.0</td>
-      <td>9.0</td>
-      <td>https://media.steepster.com/api/file/I41qXbsLT...</td>
-    </tr>
-    <tr>
-      <th>15639</th>
-      <td>52435</td>
-      <td>Three Fire Oolong</td>
-      <td>Steepster</td>
-      <td>8.0</td>
-      <td>44.0</td>
-      <td>Oolong Tea</td>
-      <td>Oolong Tea Leaves</td>
-      <td>Hay, Smoke, Brown Sugar, Burnt Food, Burnt Sug...</td>
-      <td>Loose Leaf</td>
-      <td>Medium</td>
-      <td>Not available</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>https://media.steepster.com/api/file/y97cG63aQ...</td>
-    </tr>
-    <tr>
-      <th>15640</th>
-      <td>206</td>
-      <td>White Pear</td>
-      <td>Adagio Teas</td>
-      <td>38.0</td>
-      <td>44.0</td>
-      <td>Fruit White Blend</td>
-      <td>Not available</td>
-      <td>Grass, Tea, Pear, Sweet, Flowers</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>Not available</td>
-      <td>1.0</td>
-      <td>34.0</td>
-      <td>https://media.steepster.com/api/file/FcYb3PwAS...</td>
-    </tr>
-  </tbody>
-</table>
-<p>15641 rows × 14 columns</p>
-</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>0    Floral, Rainforest, Honeysuckle, Orchids, Pepp...
+1    Dark Chocolate, Chocolate, Dates, Malt, Orchid...
+2              Honey, Lemon, Nuts, Flowers, Lemongrass
+3    Cocoa, Dark Chocolate, Malt, Vanilla, Apple, A...
+4    Sweet, Mineral, Nutty, Roasted, Salty, Butter,...
+Name: flavors, dtype: object</pre>
 </div>
 
 </div>
@@ -12893,17 +11824,29 @@ div#notebook {
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Create-a-list-of-unique-flavors">Create a list of unique flavors<a class="anchor-link" href="#Create-a-list-of-unique-flavors">&#182;</a></h3>
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">flavors</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">tea</span> <span class="ow">in</span> <span class="n">tea_df</span><span class="p">[</span><span class="s1">&#39;flavors&#39;</span><span class="p">]:</span>
     <span class="k">for</span> <span class="n">flavs</span> <span class="ow">in</span> <span class="n">tea</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">):</span>
         <span class="n">flavors</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">flavs</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">title</span><span class="p">())</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">flavors</span><span class="p">)</span>
+
+<span class="n">ordered_flavors</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">flavors</span><span class="p">))</span>
+<span class="n">number_of_flavors</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">flavors</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total number of flavors:&quot;</span><span class="p">,</span> <span class="n">number_of_flavors</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12916,94 +11859,98 @@ div#notebook {
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[9]:</div>
+<div class="prompt"></div>
 
 
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>358</pre>
-</div>
-
-</div>
-
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Total number of flavors: 358
+</pre>
 </div>
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">co_occurence</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">flavors</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">flavors</span><span class="p">)))</span>
-</pre></div>
-
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Indexing-flavors">Indexing flavors<a class="anchor-link" href="#Indexing-flavors">&#182;</a></h3>
 </div>
 </div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ordered_flavors</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">flavors</span><span class="p">))</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">flavor_to_index</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">index_to_flavor</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">i</span> <span class="o">=</span><span class="mi">0</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">for</span> <span class="n">flavor</span> <span class="ow">in</span> <span class="n">ordered_flavors</span><span class="p">:</span>
-    <span class="n">flavor_to_index</span><span class="p">[</span><span class="n">flavor</span><span class="p">]</span><span class="o">=</span><span class="n">i</span>
-    <span class="n">index_to_flavor</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">flavor</span>
-    <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+    <span class="n">flavor_to_index</span><span class="p">[</span><span class="n">flavor</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="n">index_to_flavor</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">flavor</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
     
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Index of Floral:&quot;</span><span class="p">,</span> <span class="n">flavor_to_index</span><span class="p">[</span><span class="s2">&quot;Floral&quot;</span><span class="p">],</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Flavor with index 5:&quot;</span><span class="p">,</span> <span class="n">index_to_flavor</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Index of Floral: 118 
+Flavor with index 5: Apple
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Co-occurence-Matrix-for-Flavors">Co-occurence Matrix for Flavors<a class="anchor-link" href="#Co-occurence-Matrix-for-Flavors">&#182;</a></h3>
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">tea</span> <span class="ow">in</span> <span class="n">tea_df</span><span class="p">[</span><span class="s1">&#39;flavors&#39;</span><span class="p">]:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">co_occurence</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">number_of_flavors</span><span class="p">,</span> <span class="n">number_of_flavors</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">tea</span> <span class="ow">in</span> <span class="n">tea_df</span><span class="p">[</span><span class="s1">&#39;flavors&#39;</span><span class="p">]:</span>
     <span class="n">flavlist</span> <span class="o">=</span> <span class="n">tea</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">flav1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">flavlist</span><span class="p">)):</span>
         <span class="k">for</span> <span class="n">flav2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">flav1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">flavlist</span><span class="p">)):</span>
-            <span class="n">indx1</span><span class="p">,</span> <span class="n">indx2</span> <span class="o">=</span> <span class="n">flavor_to_index</span><span class="p">[</span><span class="n">flavlist</span><span class="p">[</span><span class="n">flav1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">title</span><span class="p">()],</span><span class="n">flavor_to_index</span><span class="p">[</span><span class="n">flavlist</span><span class="p">[</span><span class="n">flav2</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">title</span><span class="p">()]</span>
-            <span class="n">co_occurence</span><span class="p">[</span><span class="n">indx1</span><span class="p">][</span><span class="n">indx2</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
-            <span class="n">co_occurence</span><span class="p">[</span><span class="n">indx2</span><span class="p">][</span><span class="n">indx1</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
-</pre></div>
+            <span class="n">indx1</span> <span class="o">=</span> <span class="n">flavor_to_index</span><span class="p">[</span><span class="n">flavlist</span><span class="p">[</span><span class="n">flav1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">title</span><span class="p">()]</span>
+            <span class="n">indx2</span> <span class="o">=</span> <span class="n">flavor_to_index</span><span class="p">[</span><span class="n">flavlist</span><span class="p">[</span><span class="n">flav2</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">title</span><span class="p">()]</span>
+            <span class="n">co_occurence</span><span class="p">[</span><span class="n">indx1</span><span class="p">][</span><span class="n">indx2</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">co_occurence</span><span class="p">[</span><span class="n">indx2</span><span class="p">][</span><span class="n">indx1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
 
-</div>
-</div>
-</div>
+<span class="c1"># Zero diagonal</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_flavors</span><span class="p">):</span>
+    <span class="n">co_occurence</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">flavors</span><span class="p">)):</span>
-    <span class="n">co_occurence</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
-<span class="n">co_occurence</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Co-occurence shape:&quot;</span><span class="p">,</span> <span class="n">co_occurence</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">co_occurence</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -13016,7 +11963,18 @@ div#notebook {
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[14]:</div>
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Co-occurence shape: (358, 358)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[5]:</div>
 
 
 
@@ -13025,10 +11983,8 @@ div#notebook {
 <pre>array([[ 0.,  0.,  3., ...,  0.,  0.,  0.],
        [ 0.,  0., 11., ...,  0.,  2.,  1.],
        [ 3., 11.,  0., ...,  1.,  3.,  3.],
-       ...,
-       [ 0.,  0.,  1., ...,  0.,  0.,  0.],
-       [ 0.,  2.,  3., ...,  0.,  0.,  1.],
-       [ 0.,  1.,  3., ...,  0.,  1.,  0.]])</pre>
+       [ 2.,  9., 26., ...,  0.,  1.,  1.],
+       [ 2., 15., 57., ...,  2.,  9.,  2.]])</pre>
 </div>
 
 </div>
@@ -13036,125 +11992,27 @@ div#notebook {
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Get-top-K-co-occurred-flavors-given-a-list-of-flavors">Get top K co-occurred flavors given a list of flavors<a class="anchor-link" href="#Get-top-K-co-occurred-flavors-given-a-list-of-flavors">&#182;</a></h3>
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># key variables</span>
-<span class="n">flavor_to_index</span>
-<span class="n">index_to_flavor</span>
-<span class="n">co_occurence</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[15]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([[ 0.,  0.,  3., ...,  0.,  0.,  0.],
-       [ 0.,  0., 11., ...,  0.,  2.,  1.],
-       [ 3., 11.,  0., ...,  1.,  3.,  3.],
-       ...,
-       [ 0.,  0.,  1., ...,  0.,  0.,  0.],
-       [ 0.,  2.,  3., ...,  0.,  0.,  1.],
-       [ 0.,  1.,  3., ...,  0.,  1.,  0.]])</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">co_occurence</span><span class="p">[</span><span class="mi">0</span><span class="p">][:]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[16]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([0., 0., 3., 2., 2., 0., 1., 0., 1., 2., 0., 0., 1., 1., 0., 0., 0.,
-       0., 0., 0., 0., 0., 0., 0., 0., 2., 0., 0., 0., 0., 0., 0., 0., 0.,
-       0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.,
-       0., 0., 0., 2., 3., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0.,
-       0., 1., 0., 0., 1., 0., 0., 0., 1., 2., 2., 0., 0., 0., 0., 0., 0.,
-       0., 0., 1., 1., 0., 0., 0., 0., 0., 1., 1., 0., 0., 0., 1., 0., 0.,
-       0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 1., 0., 0., 0., 0., 2.,
-       2., 0., 0., 0., 0., 0., 5., 0., 1., 0., 0., 3., 0., 0., 0., 0., 0.,
-       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1.,
-       2., 2., 4., 0., 0., 0., 1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.,
-       0., 0., 0., 0., 2., 0., 3., 0., 0., 0., 0., 0., 4., 0., 0., 0., 0.,
-       0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 1., 0., 2., 1., 0., 0., 0.,
-       0., 0., 0., 0., 0., 0., 1., 1., 1., 0., 1., 0., 0., 0., 0., 0., 0.,
-       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 1., 0., 0.,
-       0., 0., 1., 0., 0., 1., 1., 0., 0., 0., 2., 0., 0., 0., 0., 1., 1.,
-       0., 0., 1., 1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 1.,
-       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 2., 0.,
-       0., 1., 0., 0., 1., 0., 0., 0., 2., 1., 0., 0., 0., 0., 0., 0., 0.,
-       0., 0., 1., 0., 0., 4., 0., 1., 0., 1., 0., 0., 1., 2., 0., 0., 0.,
-       1., 0., 0., 0., 0., 0., 1., 0., 0., 1., 0., 0., 2., 0., 0., 0., 0.,
-       0., 0., 0., 0., 0., 0., 0., 1., 1., 0., 0., 0., 1., 0., 0., 0., 0.,
-       0.])</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">get_complements</span><span class="p">(</span><span class="n">flavors_query</span><span class="p">,</span><span class="n">top_x</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">get_complements</span><span class="p">(</span><span class="n">flavors_query</span><span class="p">,</span> <span class="n">top_x</span><span class="p">):</span>
     <span class="n">random_flavor</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">flavors_query</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Random flavor:&quot;</span><span class="p">,</span> <span class="n">random_flavor</span><span class="p">)</span>
     <span class="n">top_flavors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">co_occurence</span><span class="p">[</span><span class="n">flavor_to_index</span><span class="p">[</span><span class="n">random_flavor</span><span class="p">]][:])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">index_to_flavor</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">top_flavors</span><span class="p">][:</span><span class="n">top_x</span><span class="p">]</span>
-</pre></div>
 
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">get_complements</span><span class="p">([</span><span class="s1">&#39;Apple&#39;</span><span class="p">],</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Top 5 co-occurred flavors: &quot;</span><span class="p">,</span> <span class="n">get_complements</span><span class="p">([</span><span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Orange&#39;</span><span class="p">],</span> <span class="mi">5</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -13167,24 +12025,14 @@ div#notebook {
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[18]:</div>
+<div class="prompt"></div>
 
 
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[&#39;Sweet&#39;,
- &#39;Fruity&#39;,
- &#39;Cinnamon&#39;,
- &#39;Floral&#39;,
- &#39;Spices&#39;,
- &#39;Honey&#39;,
- &#39;Tart&#39;,
- &#39;Caramel&#39;,
- &#39;Cream&#39;,
- &#39;Vanilla&#39;]</pre>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Random flavor: Apple
+Top 5 co-occurred flavors:  [&#39;Sweet&#39;, &#39;Fruity&#39;, &#39;Cinnamon&#39;, &#39;Floral&#39;, &#39;Spices&#39;]
+</pre>
 </div>
-
 </div>
 
 </div>
