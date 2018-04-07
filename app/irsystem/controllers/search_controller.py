@@ -1,11 +1,10 @@
 from . import * 
-# from app.irsystem.models.matrix import Matrix
-# from app.irsystem.models.redisconn import RedisConn as RedisConn 
 from app.irsystem.models.helpers import *
 from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
 
-project_name = "HotTea"
-net_id = "Benjamin Stevens: bls235, Bowen Gao: bg453, Joshua Lee: jhl298, Sasha Badov: sb965, Yong Lin Ong: yo228"
+project_name = "noveltea"
+members_name = "Benjamin Stevens, Bowen Gao, Joshua Lee:, Sasha Badov, Yong Lin Ong"
+net_id = "bls235, bg453, jhl298, sb965, yo228"
 
 @irsystem.route('/', methods=['GET'])
 def search():
@@ -14,9 +13,9 @@ def search():
 		data = []
 		output_message = ''
 	else:
-		output_message = "Your search: " + query
+		query = query
 		data = range(5)
-	return render_template('search.html', name=project_name, netid=net_id, output_message=output_message, data=data)
+	return render_template('search.html', name=project_name, netid=net_id, query=query, data=data)
 
 
 

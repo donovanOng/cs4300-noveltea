@@ -1,39 +1,71 @@
 <html>
     <head>
-        <link rel="stylesheet" href="/static/bootstrap.min.css">
+        <title>{{ name }}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="/static/main.css">
     </head>
     <body>
-        <div class="topcorner">
-            <p>Project Name: {{ name }}</p>
-            <p>Student Name: {{ netid }}</p>
+    <div class="top-corner">
+        <small class="text-muted">Data collected for this application is for academic purposes only.</small><br>
+        <small class="text-muted">Built by {{ netid }}</small>
+    </div>
+
+    <main role="main" class="container">
+
+    <div class="row justify-content-lg-center">
+        <div class="search-container col-lg-8">
+            <h1 class="site-name">{{ name }}</h1>
+            <p class="lead"></p>
+            <form>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">Flavors</span>
+                    </div>
+                    <input type="text" name="search" class="form-control" id="input" aria-describedby="basic-addon3" placeholder="citrus, floral...">
+                    <button type="submit" class="btn btn-info">Search</button>
+                </div>
+            </form>
         </div>
-        <form class="form-inline global-search">
-            <h1 style="font-size: 55px; font-family:Futura; color: #4285F4">
-                C
-                <font color=#EA4335>S</font>
-                <font color=#FBBC05>4</font>
-                3
-                <font color=#34A853>0</font>
-                <font color=#EA4335>0</font>
-            </h1>
-            
-            <br><br>
-            
-            <div class="form-group">
-                <input id="input" type="text" name="search" class="form-control" placeholder="Your Input">
+        <div class="search-result col-lg-8 mt-4">
+            <div class="row align-items-center bg-light p-3">
+                <div class="col-7">
+                    <h5 class="m-0">
+                        <small class="text-muted">Best tea with</small>
+                        {{query}}
+                        <small class="text-muted">flavor</small>
+                    </h5>
+                </div>
+                <div class="col-5 text-right">
+                    <small class="text-muted">{{data|length}} teas found</small>
+                </div>
             </div>
-            <button type="submit" class="btn btn-info"> Go! </button>
-        </form>
-        <form class="form-inline global-search">
-        {% if data %}
-            <h1>{{output_message}}</h1>
+            <div>
+            {% if data %}
             {% for d in data %}  
-                <br>
-                <p>{{d}}</p>
+            <div class="card mt-2">
+            <div class="row align-items-center">
+                <div class="col-md-3 pl-4">
+                    <img class="card-img-top" src="https://media.steepster.com/api/file/84cnuVtQM2H3tOExihbL/convert?fit=crop&h=190&w=190" alt="Card image cap">
+                </div>
+                <div class="col-md-9 pl-0">
+                    <div class="card-body">
+                        <h5 class="card-title">Milk Oolong Tea</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">by Mandala Tea</h6>
+                        <p class="card-text">Apricot, Creamy, Mango, Milk, Smooth, Stonefruits, Cream, Seaweed, Sweet, warm grass, Orchid, Sweet, Butter</p>
+                        <a href="#" class="card-link">View on Steepser</a>
+                    </div>
+                </div>
+            </div>
+            </div>
             {% endfor %}
-        {% endif %}
-        </form>
+            {% endif %}
+            </div>
+        </div>
+
+    </div>
+    </main><!-- /.container -->
+
     </body>
 
 </html>
