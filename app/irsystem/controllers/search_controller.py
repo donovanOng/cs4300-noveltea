@@ -9,12 +9,12 @@ net_id = "bls235, bg453, jhl298, sb965, yo228"
 
 @irsystem.route('/', methods=['GET'])
 def search():
-	q_flavor = request.args.get('flavor').title()
+	q_flavor = request.args.get('flavor')
 	if not q_flavor:
 		data = []
 		output_message = ''
 	else:
-		data = Tea.query.filter(Tea.flavors.like("%" + q_flavor + "%")).limit(10).all()
+		data = Tea.query.filter(Tea.flavors.like("%" + q_flavor.title() + "%")).limit(10).all()
 		print data[0]
 	return render_template('search.html', name=project_name, netid=net_id, query=q_flavor, data=data)
 
