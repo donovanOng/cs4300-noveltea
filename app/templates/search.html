@@ -22,11 +22,12 @@
                     <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon3">Flavors</span>
                     </div>
-                    <input type="text" name="search" class="form-control" id="input" aria-describedby="basic-addon3" placeholder="citrus, floral...">
+                    <input type="text" name="flavor" class="form-control" id="input" aria-describedby="basic-addon3" placeholder="citrus, floral...">
                     <button type="submit" class="btn btn-info">Search</button>
                 </div>
             </form>
         </div>
+        {% if data %}
         <div class="search-result col-lg-8 mt-4">
             <div class="row align-items-center bg-light p-3">
                 <div class="col-7">
@@ -41,27 +42,27 @@
                 </div>
             </div>
             <div>
-            {% if data %}
-            {% for d in data %}  
+            {% for tea in data %}  
             <div class="card mt-2">
             <div class="row align-items-center">
                 <div class="col-md-3 pl-4">
-                    <img class="card-img-top" src="https://media.steepster.com/api/file/84cnuVtQM2H3tOExihbL/convert?fit=crop&h=190&w=190" alt="Card image cap">
+                    <img class="card-img-top" src="{{ tea.imageUrl }}" alt="{{ tea.name }}">
                 </div>
                 <div class="col-md-9 pl-0">
                     <div class="card-body">
-                        <h5 class="card-title">Milk Oolong Tea</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">by Mandala Tea</h6>
-                        <p class="card-text">Apricot, Creamy, Mango, Milk, Smooth, Stonefruits, Cream, Seaweed, Sweet, warm grass, Orchid, Sweet, Butter</p>
+                        <h5 class="card-title">{{ tea.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">by {{ tea.brand }}</h6>
+                        <p class="card-text">{{ tea.flavors }}</p>
                         <a href="#" class="card-link">View on Steepser</a>
                     </div>
                 </div>
             </div>
             </div>
             {% endfor %}
-            {% endif %}
+            
             </div>
         </div>
+        {% endif %}
 
     </div>
     </main><!-- /.container -->

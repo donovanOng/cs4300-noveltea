@@ -3,6 +3,7 @@ from flask import jsonify
 import base64
 import json
 import numpy as np 
+
 def http_json(result, bool):
 	result.update({ "success": bool })
 	return jsonify(result)
@@ -16,6 +17,7 @@ def http_resource(result, name, bool=True):
 def http_errors(result): 
 	errors = { "data" : { "errors" : result.errors["_schema"] }}
 	return http_json(errors, False)
+
 
 class NumpyEncoder(json.JSONEncoder):
 

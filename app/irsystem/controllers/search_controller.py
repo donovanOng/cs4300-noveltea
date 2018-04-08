@@ -1,4 +1,5 @@
 from . import * 
+from app.irsystem.models.tea import Tea
 from app.irsystem.models.helpers import *
 from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
 
@@ -8,14 +9,14 @@ net_id = "bls235, bg453, jhl298, sb965, yo228"
 
 @irsystem.route('/', methods=['GET'])
 def search():
-	query = request.args.get('search')
-	if not query:
+	q_flavor = request.args.get('flavor').title()
+	if not q_flavor:
 		data = []
 		output_message = ''
 	else:
-		query = query
-		data = range(5)
-	return render_template('search.html', name=project_name, netid=net_id, query=query, data=data)
+		data = Tea.query.filter(Tea.flavors.like("%" + q_flavor + "%")).limit(10).all()
+		print data[0]
+	return render_template('search.html', name=project_name, netid=net_id, query=q_flavor, data=data)
 
 
 
