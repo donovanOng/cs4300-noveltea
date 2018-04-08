@@ -15,7 +15,8 @@ if not Tea.query.get(1):
             db.session.add(tea)
             db.session.commit()
             i += 1
-            print row[1]
+            if i == 10000:
+                break
         print i
 else:
     print "Database already has teas"
