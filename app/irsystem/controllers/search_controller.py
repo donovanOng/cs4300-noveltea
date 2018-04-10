@@ -20,10 +20,10 @@ def search():
 		q_flavor = "%".join([flavor.title() for flavor in q_flavor.split(",")])
 		raw_teas = Tea.query.filter(Tea.flavors.like("%" + q_flavor + "%"))
 		total = raw_teas.count()
-		teas = raw_teas.limit(10).offset(page)
+		teas = raw_teas.offset((page-1)*10).limit(10)
 		pagination = Pagination(page=page, total=total, per_page=10, bs_version=4, record_name="teas")
 		q_flavor = q_flavor.replace("%", ", ")
-		
+
 	return render_template('search.html', name=project_name, netid=net_id, query=q_flavor, teas=teas, pagination=pagination)
 
 
