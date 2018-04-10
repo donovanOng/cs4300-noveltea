@@ -39,13 +39,13 @@
                     </h5>
                 </div>
                 <div class="col-5 text-right">
-                    <small class="text-muted">{{data|length}} teas found</small>
+                    <small class="text-muted">{{ pagination.info }}</small>
                 </div>
             </div>
             {% endif %}
-            {% if data %}
-            <div>
-            {% for tea in data %}  
+            {% if teas %}
+            <div class="mb-3">
+            {% for tea in teas %}  
             <div class="card mt-2">
             <div class="row align-items-center">
                 <div class="col-md-3 pl-4">
@@ -63,6 +63,7 @@
             </div>
             {% endfor %}
             </div>
+            {{ pagination.links }}
             {% endif %}
         </div>
         

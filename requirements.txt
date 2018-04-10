@@ -5,12 +5,13 @@ autoenv==1.0.0
 bcrypt==2.0.0
 cffi==1.6.0
 click==6.7
-Flask==0.10.1
+Flask==0.12.2
 Flask-Bcrypt==0.7.1
 Flask-HTTPAuth==3.1.2
 Flask-JWT==0.3.2
 flask-marshmallow==0.6.2
 Flask-Migrate==1.8.0
+flask-paginate==0.5.1
 Flask-RESTful==0.3.5
 Flask-Script==2.0.5
 Flask-SocketIO==2.3
@@ -21,9 +22,9 @@ greenlet==0.4.9
 gunicorn==19.7.0
 hiredis==0.2.0
 itsdangerous==0.24
-Jinja2==2.8
+Jinja2==2.10
 Mako==1.0.4
-MarkupSafe==0.23
+MarkupSafe==1.0
 marshmallow==2.7.3
 marshmallow-sqlalchemy==0.8.1
 mysql-connector==2.1.4
@@ -44,5 +45,5 @@ requests==2.13.0
 scikit-learn==0.18.1
 six==1.10.0
 SQLAlchemy==1.0.13
-Werkzeug==0.11.9
+Werkzeug==0.14.1
 WTForms==2.1
