@@ -22,7 +22,9 @@ def search():
 		total = raw_teas.count()
 		teas = raw_teas.limit(10).offset(page)
 		pagination = Pagination(page=page, total=total, per_page=10, bs_version=4, record_name="teas")
-	return render_template('search.html', name=project_name, netid=net_id, query=q_flavor.replace("%", ", "), teas=teas, pagination=pagination)
+		q_flavor = q_flavor.replace("%", ", ")
+		
+	return render_template('search.html', name=project_name, netid=net_id, query=q_flavor, teas=teas, pagination=pagination)
 
 
 
