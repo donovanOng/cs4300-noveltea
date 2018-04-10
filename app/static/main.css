@@ -9,12 +9,10 @@ body {
     padding-top: 3rem;
     padding-bottom: 3rem;
 }
-.search-container {
-    text-align: center;
-}
 h1.site-name {
     font-size: 55px;
     color: #006341;
+    text-align: center;
 }
 h5.card-title {
     color: #006341;
