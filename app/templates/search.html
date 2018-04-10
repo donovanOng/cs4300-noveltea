@@ -13,9 +13,7 @@
         <small class="text-muted">Data collected for this application is for academic purposes only.</small><br>
         <small class="text-muted">Built by {{ netid }}</small>
     </div>
-
     <main role="main" class="container">
-
     <div class="row justify-content-lg-center">
         <div class="search-container col-lg-8">
             <h1 class="site-name">{{ name }}</h1>
@@ -23,14 +21,13 @@
             <form>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon3">Flavors</span>
+                        <span class="input-group-text" id="basic-addon3">Flavors</span>
                     </div>
                     <input type="text" name="flavor" class="form-control" id="input" aria-describedby="basic-addon3" data-role="tagsinput" placeholder="citrus, floral...">
                     <button type="submit" class="btn btn-info">Search</button>
                 </div>
             </form>
         </div>
-        
         <div class="search-result col-lg-8 mt-4">
             {% if query %}
             <div class="row align-items-center bg-light p-3">
@@ -69,11 +66,7 @@
             {{ pagination.links }}
             {% endif %}
         </div>
-        
-
     </div>
     </main><!-- /.container -->
-
     </body>
-
 </html>

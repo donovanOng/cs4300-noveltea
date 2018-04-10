@@ -5,18 +5,18 @@ import json
 import numpy as np 
 
 def http_json(result, bool):
-	result.update({ "success": bool })
-	return jsonify(result)
+    result.update({ "success": bool })
+    return jsonify(result)
 
 
 def http_resource(result, name, bool=True):
-	resp = { "data": { name : result }}
-	return http_json(resp, bool)
+    resp = { "data": { name : result }}
+    return http_json(resp, bool)
 
 
 def http_errors(result): 
-	errors = { "data" : { "errors" : result.errors["_schema"] }}
-	return http_json(errors, False)
+    errors = { "data" : { "errors" : result.errors["_schema"] }}
+    return http_json(errors, False)
 
 
 class NumpyEncoder(json.JSONEncoder):

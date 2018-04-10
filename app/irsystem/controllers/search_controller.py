@@ -10,21 +10,24 @@ net_id = "bls235, bg453, jhl298, sb965, yo228"
 
 @irsystem.route('/', methods=['GET'])
 def search():
-	q_flavor = request.args.get('flavor')
-	page = request.args.get(get_page_parameter(), type=int, default=1)
-	pagination = None
-	if not q_flavor:
-		teas = []
-		output_message = ''
-	else:
-		q_flavor = "%".join([flavor.title() for flavor in q_flavor.split(",")])
-		raw_teas = Tea.query.filter(Tea.flavors.like("%" + q_flavor + "%"))
-		total = raw_teas.count()
-		teas = raw_teas.offset((page-1)*10).limit(10)
-		pagination = Pagination(page=page, total=total, per_page=10, bs_version=4, record_name="teas")
-		q_flavor = q_flavor.replace("%", ", ")
+    q_flavor = request.args.get('flavor')
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    pagination = None
+    if not q_flavor:
+        teas = []
+        output_message = ''
+    else:
+        q_flavor = "%".join([flavor.title() for flavor in q_flavor.split(",")])
+        raw_teas = Tea.query.filter(Tea.flavors.like("%" + q_flavor + "%"))
+        total = raw_teas.count()
+        teas = raw_teas.offset((page-1)*10).limit(10)
+        pagination = Pagination(page=page, total=total, per_page=10, 
+                                bs_version=4, record_name="teas")
+        q_flavor = q_flavor.replace("%", ", ")
 
-	return render_template('search.html', name=project_name, netid=net_id, query=q_flavor, teas=teas, pagination=pagination)
+    return render_template('search.html', name=project_name, netid=net_id, 
+                            query=q_flavor, teas=teas, 
+                            pagination=pagination)
 
 
 

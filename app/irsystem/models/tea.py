@@ -39,4 +39,3 @@ class Tea(Base):
 class TeaSchema(ModelSchema):
     class Meta:
         model = Tea
-        
