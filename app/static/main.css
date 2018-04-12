@@ -14,6 +14,10 @@ h1.site-name {
     color: #006341;
     text-align: center;
 }
+#btn-search {
+    border-radius: 0px 4px 4px 0px;
+    padding: .375rem 1.5rem;
+}
 h5.card-title {
     color: #006341;
     margin-bottom: 8px;

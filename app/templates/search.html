@@ -7,6 +7,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="/static/vendor/bootstrap4-tagsinput/tagsinput.js"></script>
+        <link href="/static/vendor/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
     </head>
     <body>
     <div class="top-corner">
@@ -24,21 +25,21 @@
                         <span class="input-group-text" id="basic-addon3">Flavors</span>
                     </div>
                     <input type="text" name="flavor" class="form-control" id="input" aria-describedby="basic-addon3" data-role="tagsinput" placeholder="citrus, floral...">
-                    <button type="submit" class="btn btn-info">Search</button>
+                    <button id="btn-search" type="submit" class="btn btn-info"><span class="oi oi-magnifying-glass"></span></button>
                 </div>
             </form>
         </div>
         <div class="search-result col-lg-8 mt-4">
             {% if query %}
-            <div class="row align-items-center bg-light p-3">
-                <div class="col-7">
+            <div class="row align-items-center pl-3 pr-3">
+                <div class="col-7 bg-light p-3">
                     <h5 class="m-0">
                         <small class="text-muted">Best tea with</small>
                         {{query}}
                         <small class="text-muted">flavor</small>
                     </h5>
                 </div>
-                <div class="col-5 text-right">
+                <div class="col-5 bg-light p-3 text-right">
                     <small class="text-muted">{{ pagination.info }}</small>
                 </div>
             </div>
