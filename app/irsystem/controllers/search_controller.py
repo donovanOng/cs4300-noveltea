@@ -18,7 +18,7 @@ def search():
         output_message = ''
     else:
         q_flavor = "%".join([flavor.title() for flavor in q_flavor.split(",")])
-        raw_teas = Tea.query.filter(Tea.flavors.like("%" + q_flavor + "%"))
+        raw_teas = Tea.query.filter(Tea.flavors.like("%" + q_flavor + "%")).order_by(Tea.ratingValue.desc())
         total = raw_teas.count()
         teas = raw_teas.offset((page-1)*10).limit(10)
         pagination = Pagination(page=page, total=total, per_page=10, 
