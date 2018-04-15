@@ -22,7 +22,7 @@ def search():
     else:
         q_flavor = "%".join([flavor.title() for flavor in q_flavor.split(",")])
         raw_teas = Tea.query.filter(Tea.flavors.like("%" + q_flavor + "%")).order_by(Tea.ratingValue.desc())
-        if HITS_RANK:
+        if HITS_RANK and raw_teas.count() > 0:
             hits_ranked_tea_id = hits_rank([tea.id for tea in raw_teas.all()])
             # https://stackoverflow.com/questions/29326297/sqlalchemy-filter-by-field-in-list-but-keep-original-order
             from sqlalchemy.sql.expression import case

@@ -16,6 +16,7 @@ class Tea(Base):
     wantIt = db.Column(db.Float)
     ownIt = db.Column(db.Float)
     imageUrl = db.Column(db.String(400))
+    url = db.Column(db.String)
 
     def __init__(self, **kwargs):
         self.name = kwargs.get('name', None)
@@ -31,6 +32,7 @@ class Tea(Base):
         self.wantIt = kwargs.get('wantIt', None)
         self.ownIt = kwargs.get('ownIt', None)
         self.imageUrl = kwargs.get('imageUrl', None)
+        self.url = kwargs.get('url', None)
 
     def __repr__(self):
         return str(self.__dict__)
