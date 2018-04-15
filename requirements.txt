@@ -5,6 +5,7 @@ autoenv==1.0.0
 bcrypt==2.0.0
 cffi==1.6.0
 click==6.7
+decorator==4.2.1
 Flask==0.12.2
 Flask-Bcrypt==0.7.1
 Flask-HTTPAuth==3.1.2
@@ -28,9 +29,11 @@ MarkupSafe==1.0
 marshmallow==2.7.3
 marshmallow-sqlalchemy==0.8.1
 mysql-connector==2.1.4
+networkx==2.1
 nltk==3.2.2
 numpy==1.14.2
 packaging==16.8
+pandas==0.22.0
 psycopg2==2.7.4
 pycparser==2.14
 PyJWT==1.4.0

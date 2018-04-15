@@ -34,7 +34,7 @@ class ReviewSpider(scrapy.Spider):
                 'review_id': review.css('div.review::attr(id)').extract_first().strip().replace("review_", ""),
                 'note_id': review.css('div.note::attr(id)').extract_first().strip().replace("note_", ""),
                 'author': author.strip() if author else "Not available",
-                #'author_url': review.css('span[itemprop=author] a[itemprop=url]::attr(href)').extract_first().strip(),
+                'author_url': review.css('span[itemprop=author] a[itemprop=url]::attr(href)').extract_first().strip()[1:] if author else "Not available",
                 'ratingValue': ratingValue.strip() if ratingValue else "Not available",
                 'description': description.strip().replace("\n", " ") if description else "Not available",
                 'likes': likes.strip().replace(" likes", "") if likes else "Not available",
