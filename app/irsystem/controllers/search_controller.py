@@ -13,15 +13,17 @@ HITS_RANK = True
 
 @irsystem.route('/', methods=['GET'])
 def search():
-    q_flavor = request.args.get('flavor')
+    raw_query = request.args.get('flavor')
     page = request.args.get(get_page_parameter(), type=int, default=1)
     pagination = None
-    if not q_flavor:
+    if not raw_query:
+        q_flavor = ""
         teas = []
-        output_message = ''
+        output_message = ""
     else:
-        q_flavor = "%".join([flavor.title().strip() for flavor in q_flavor.split(",")])
-        raw_teas = Tea.query.filter(Tea.flavors.like("%" + q_flavor + "%")).order_by(Tea.ratingValue.desc())
+        q_flavor = ", ".join([flavor.title().strip() for flavor in raw_query.split(",")])
+        flavor_query = " OR ".join(["teas.flavors LIKE '%" + flavor.title().strip() + "%'" for flavor in raw_query.split(",")])
+        raw_teas = Tea.query.filter(flavor_query).order_by(Tea.ratingValue.desc())
         if HITS_RANK and raw_teas.count() > 0:
             # print "Found {} teas".format(raw_teas.count())
             hits_ranked_tea_id = hits_rank([tea.id for tea in raw_teas.all()])
@@ -39,8 +41,6 @@ def search():
 
         pagination = Pagination(page=page, total=total, per_page=10, 
                                 bs_version=4, record_name="teas")
-
-        q_flavor = q_flavor.replace("%", ", ")
 
     return render_template('search.html', name=project_name, netid=net_id, 
                             query=q_flavor, teas=teas, 
