@@ -20,17 +20,20 @@ def search():
         teas = []
         output_message = ''
     else:
-        q_flavor = "%".join([flavor.title() for flavor in q_flavor.split(",")])
+        q_flavor = "%".join([flavor.title().strip() for flavor in q_flavor.split(",")])
         raw_teas = Tea.query.filter(Tea.flavors.like("%" + q_flavor + "%")).order_by(Tea.ratingValue.desc())
         if HITS_RANK and raw_teas.count() > 0:
+            # print "Found {} teas".format(raw_teas.count())
             hits_ranked_tea_id = hits_rank([tea.id for tea in raw_teas.all()])
-            # https://stackoverflow.com/questions/29326297/sqlalchemy-filter-by-field-in-list-but-keep-original-order
-            from sqlalchemy.sql.expression import case
-            ordering = case(
-                {id: index for index, id in enumerate(hits_ranked_tea_id)},
-                value=Tea.id
-            )
-            raw_teas = Tea.query.filter(Tea.id.in_(hits_ranked_tea_id)).order_by(ordering)
+            # print "Found {} teas after HITS algo".format(len(hits_ranked_tea_id))
+            if hits_ranked_tea_id:
+                # https://stackoverflow.com/questions/29326297/sqlalchemy-filter-by-field-in-list-but-keep-original-order
+                from sqlalchemy.sql.expression import case
+                ordering = case(
+                    {id: index for index, id in enumerate(hits_ranked_tea_id)},
+                    value=Tea.id
+                )
+                raw_teas = Tea.query.filter(Tea.id.in_(hits_ranked_tea_id)).order_by(ordering)
         total = raw_teas.count()
         teas = raw_teas.offset((page-1)*10).limit(10)
 
