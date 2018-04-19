@@ -61,7 +61,7 @@
                         <h5 class="card-title">{{ tea.name }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">by {{ tea.brand }}</h6>
                         <p class="card-text mb-2">{{ tea.flavors }}</p>
-                        <p class="card-text mb-2">Steepster: {{ tea.ratingValue }} | Want It: {{ tea.wantIt }} | Own It: {{ tea.ownIt }}
+                        <p class="card-text mb-2">Tea Type: {{ tea.teaType }} | Steepster: {{ tea.ratingValue }} | Want It: {{ tea.wantIt }} | Own It: {{ tea.ownIt }} 
                         </p>
                         <a href="{{ tea.url }}" class="card-link">View on Steepser</a>
                     </div>
@@ -73,7 +73,65 @@
             {{ pagination.links }}
             {% endif %}
         </div>
+        <div class="filters col-lg-3 mt-4">
+            {% if tea_types %}
+            <div class="filter-box mb-3 bg-light p-3">
+                <h6 class="mb-1">Tea Type</h6>
+                <form id="teaTypeForm">
+                    <input type="hidden" name="flavor" value="{{ query }}" />
+                    {% if f_caffeine %}
+                    <input type="hidden" name="notCaffeines" value="{{ f_caffeine }}" />
+                    {% endif %}
+                    <input type="hidden" name="notTeaTypes" value="" id="teaTypeFilter" />
+                    {% for teaType in tea_types %}
+                    <div class="form-check">
+                        {% if teaType[1] == False %}
+                        <input class="form-check-input teaTypeCB" type="checkbox" id="id_{{teaType[0]}}" value="{{teaType[0]}}" onclick="checkSubmit('teaType')" checked />
+                        {% else %}
+                        <input class="form-check-input teaTypeCB" type="checkbox" id="id_{{teaType[0]}}" value="{{teaType[0]}}" onclick="checkSubmit('teaType')">
+                        {% endif %}
+                        <label class="form-check-label" for="id_{{teaType[0]}}">{{teaType[0]}}</label>
+                    </div>
+                    {% endfor %}
+                </form>
+            </div>
+            {% endif %}
+
+            {% if caffeines %}
+            <div class="filter-box mb-3 bg-light p-3">
+            <h6 class="mb-1">Caffeine</h6>
+            <form id="caffeineForm">
+                <input type="hidden" name="flavor" value="{{ query }}" />
+                {% if f_teaType %}
+                <input type="hidden" name="notTeaTypes" value="{{ f_teaType }}" />
+                {% endif %}  
+                <input type="hidden" name="notCaffeines" value="" id="caffeineFilter" />
+                {% for caffeine in caffeines %}
+                <div class="form-check">
+                    {% if caffeine[1] == False %}
+                    <input class="form-check-input caffeineCB" type="checkbox" id="id_{{caffeine[0]}}" value="{{caffeine[0]}}" onclick="checkSubmit('caffeine')" checked />
+                    {% else %}
+                    <input class="form-check-input caffeineCB" type="checkbox" id="id_{{caffeine[0]}}" value="{{caffeine[0]}}" onclick="checkSubmit('caffeine')">
+                    {% endif %}
+                    <label class="form-check-label" for="id_{{caffeine[0]}}">{{caffeine[0]}}</label>
+                </div>
+                {% endfor %}
+            </form>
+            </div>
+            {% endif %}
+        </div>
     </div>
     </main><!-- /.container -->
+    <script>
+    function checkSubmit(filterType) {
+        var filterList = $('.' + filterType + 'CB:not(:checked)').map(function() {return this.value;}).get().join(',')
+        if (filterList) {
+            $("#" + filterType + "Filter").val(filterList)
+        } else {
+            $("#" + filterType + "Filter").remove()
+        }
+        $("#" + filterType + 'Form').submit()
+    }
+    </script>
     </body>
 </html>

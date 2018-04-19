@@ -20,21 +20,28 @@ def search():
         return search_v2()
 
 def search_v2():
-    raw_query = request.args.get('flavor')
+    q_flavor_raw = request.args.get('flavor')
+    f_teaType = request.args.get('notTeaTypes', "")
+    f_caffeine = request.args.get('notCaffeines', "")
     page = request.args.get(get_page_parameter(), type=int, default=1)
+
+    print f_teaType
+    
     pagination = None
 
-    if not raw_query:
+    if not q_flavor_raw:
         q_flavor = ""
         teas = []
         output_message = ""
+        tea_types = []
+        caffeines = []
     else:
-        q_flavor = ", ".join([flavor.title().strip() for flavor in raw_query.split(",")])
+        q_flavor = ", ".join([flavor.title().strip() for flavor in q_flavor_raw.split(",")])
 
-        flavors_AND_query = " AND ".join(["teas.flavors LIKE '%" + flavor.title().strip() + "%'" for flavor in raw_query.split(",")])
+        flavors_AND_query = " AND ".join(["teas.flavors LIKE '%" + flavor.title().strip() + "%'" for flavor in q_flavor_raw.split(",")])
         raw_teas_AND = Tea.query.filter(flavors_AND_query).order_by(Tea.ratingValue.desc())
 
-        flavor_OR_query = " OR ".join(["teas.flavors LIKE '%" + flavor.title().strip() + "%'" for flavor in raw_query.split(",")])
+        flavor_OR_query = " OR ".join(["teas.flavors LIKE '%" + flavor.title().strip() + "%'" for flavor in q_flavor_raw.split(",")])
         raw_teas_OR = Tea.query.filter(flavor_OR_query).order_by(Tea.ratingValue.desc())
 
         if (raw_teas_AND.count() + raw_teas_OR.count()) > 0:            
@@ -54,17 +61,33 @@ def search_v2():
                 raw_teas = Tea.query.filter(Tea.id.in_(ranked_tea_id)).order_by(ordering_sql(ranked_tea_id))
         else:
             raw_teas = raw_teas_AND
-        
+
+        # Filters 
+        tea_types = [tea.teaType for tea in raw_teas.all()] if raw_teas.all() else []
+        tea_types = sorted(list(set(tea_types)))
+        tea_types = [(teaType, teaType in f_teaType.split(",")) for teaType in tea_types]
+
+        caffeines = [tea.caffeine for tea in raw_teas.all()] if raw_teas.all() else []
+        caffeines = sorted(list(set(caffeines)))
+        caffeines = [(caffeine, caffeine in f_caffeine.split(",")) for caffeine in caffeines]
+
+        if f_teaType:
+            raw_teas = raw_teas.filter(~Tea.teaType.in_(f_teaType.split(",")))
+        if f_caffeine:
+            raw_teas = raw_teas.filter(~Tea.caffeine.in_(f_caffeine.split(",")))
+
         total = raw_teas.count()
         teas = raw_teas.offset((page-1)*10).limit(10)
-
+            
         pagination = Pagination(page=page, total=total, per_page=10, 
                                 bs_version=4, record_name="teas")
 
     return render_template('search.html', name=project_name, netid=net_id, 
                             query=q_flavor, teas=teas, 
                             pagination=pagination,
-                            version=request.args.get('version'))
+                            version=request.args.get('version'),
+                            tea_types=tea_types, caffeines=caffeines,
+                            f_teaType=f_teaType, f_caffeine=f_caffeine)
 
 def search_v1():
     raw_query = request.args.get('flavor')
