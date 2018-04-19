@@ -13,6 +13,13 @@ HITS_RANK = True
 
 @irsystem.route('/', methods=['GET'])
 def search():
+    version = request.args.get('version')
+    if version == 1:
+        return search_v1()
+    else:
+        return search_v2()
+
+def search_v2():
     raw_query = request.args.get('flavor')
     page = request.args.get(get_page_parameter(), type=int, default=1)
     pagination = None
@@ -44,8 +51,43 @@ def search():
 
     return render_template('search.html', name=project_name, netid=net_id, 
                             query=q_flavor, teas=teas, 
-                            pagination=pagination)
+                            pagination=pagination,
+                            version=request.args.get('version'))
 
+def search_v1():
+    raw_query = request.args.get('flavor')
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    pagination = None
+    if not raw_query:
+        q_flavor = ""
+        teas = []
+        output_message = ""
+    else:
+        q_flavor = ", ".join([flavor.title().strip() for flavor in raw_query.split(",")])
+        flavor_query = " OR ".join(["teas.flavors LIKE '%" + flavor.title().strip() + "%'" for flavor in raw_query.split(",")])
+        raw_teas = Tea.query.filter(flavor_query).order_by(Tea.ratingValue.desc())
+        if HITS_RANK and raw_teas.count() > 0:
+            # print "Found {} teas".format(raw_teas.count())
+            hits_ranked_tea_id = hits_rank([tea.id for tea in raw_teas.all()])
+            # print "Found {} teas after HITS algo".format(len(hits_ranked_tea_id))
+            if hits_ranked_tea_id:
+                # https://stackoverflow.com/questions/29326297/sqlalchemy-filter-by-field-in-list-but-keep-original-order
+                from sqlalchemy.sql.expression import case
+                ordering = case(
+                    {id: index for index, id in enumerate(hits_ranked_tea_id)},
+                    value=Tea.id
+                )
+                raw_teas = Tea.query.filter(Tea.id.in_(hits_ranked_tea_id)).order_by(ordering)
+        total = raw_teas.count()
+        teas = raw_teas.offset((page-1)*10).limit(10)
+
+        pagination = Pagination(page=page, total=total, per_page=10, 
+                                bs_version=4, record_name="teas")
+
+    return render_template('search.html', name=project_name, netid=net_id, 
+                            query=q_flavor, teas=teas, 
+                            pagination=pagination,
+                            version=request.args.get('version'))
 
 def hits_rank(matchFlavors):
     import pandas as pd
