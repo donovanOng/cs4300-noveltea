@@ -7,4 +7,5 @@ vagrant/a4keypair.pem
 .ipynb_checkpoints
 .DS_Store
 *.zip
-review.csv
+reviews.csv
+.vscode
