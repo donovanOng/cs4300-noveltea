@@ -14,7 +14,7 @@ HITS_RANK = True
 @irsystem.route('/', methods=['GET'])
 def search():
     version = request.args.get('version')
-    if version == 1:
+    if version == "1":
         return search_v1()
     else:
         return search_v2()
@@ -96,7 +96,7 @@ def search_v1():
         pagination = Pagination(page=page, total=total, per_page=10, 
                                 bs_version=4, record_name="teas")
 
-    return render_template('search.html', name=project_name, netid=net_id, 
+    return render_template('search_v1.html', name=project_name, netid=net_id, 
                             query=q_flavor, teas=teas, 
                             pagination=pagination,
                             version=request.args.get('version'))

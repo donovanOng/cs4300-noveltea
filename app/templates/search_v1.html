@@ -4,16 +4,16 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="/static/main.css">
         <link rel="stylesheet" href="/static/vendor/bootstrap4-tagsinput/tagsinput.css">
+        <link rel="stylesheet" href="/static/vendor/open-iconic/font/css/open-iconic-bootstrap.css" >
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="/static/vendor/bootstrap4-tagsinput/tagsinput.js"></script>
-        <link href="/static/vendor/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
     </head>
     <body>
     <div class="top-corner">
         <small class="text-muted">Data collected for this application is for academic purposes only.</small><br>
         <small class="text-muted">Built by {{ netid }}</small><br>
-        <small class="text-muted">Switch to <a href="/?version=1">Version 1</a></small>
+        <small class="text-muted">Switch to <a href="/">Version 2</a></small>
     </div>
     <main role="main" class="container">
     <div class="row justify-content-lg-center">
@@ -27,9 +27,7 @@
                     </div>
                     <input type="text" name="flavor" class="form-control" id="input" aria-describedby="basic-addon3" data-role="tagsinput" placeholder="citrus, floral...">
                     <button id="btn-search" type="submit" class="btn btn-info"><span class="oi oi-magnifying-glass"></span></button>
-                    {% if version %}
                     <input type="hidden" name="version" value="{{ version }}"/>
-                    {% endif %}
                 </div>
             </form>
         </div>
