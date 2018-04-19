@@ -25,8 +25,6 @@ def search_v2():
     f_caffeine = request.args.get('notCaffeines', "")
     page = request.args.get(get_page_parameter(), type=int, default=1)
 
-    print f_teaType
-    
     pagination = None
 
     if not q_flavor_raw:
