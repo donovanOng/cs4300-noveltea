@@ -8,6 +8,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="/static/vendor/bootstrap4-tagsinput/tagsinput.js"></script>
         <link href="/static/vendor/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+        <script src="http://d3js.org/d3.v4.min.js"></script>
+
     </head>
     <body>
     <div class="top-corner">
@@ -25,13 +27,14 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon3">Flavors</span>
                     </div>
-                    <input type="text" name="flavor" class="form-control" id="input" aria-describedby="basic-addon3" data-role="tagsinput" placeholder="citrus, floral...">
+                    <input type="text" name="flavor" class="form-control" id="input" onchange= 'show_complements()'aria-describedby="basic-addon3" data-role="tagsinput" placeholder="citrus, floral...">
                     <button id="btn-search" type="submit" class="btn btn-info"><span class="oi oi-magnifying-glass"></span></button>
                     {% if version %}
                     <input type="hidden" name="version" value="{{ version }}"/>
                     {% endif %}
                 </div>
             </form>
+        <p id="suggest"></p>
         </div>
         <div class="search-result col-lg-8 mt-4">
             {% if query %}
@@ -134,6 +137,84 @@
         }
         $("#" + filterType + 'Form').submit()
     }
+
+    //Co_occurence matrix used 
+    var flavs= $("input").tagsinput('items').itemsArray;
+        var flavor_to_index, index_to_flavor, cooc;
+
+        $.getJSON("https://raw.githubusercontent.com/joshua-lee/public_jsons_tea/master/flavor_to_index.json", function(json) {
+            flavor_to_index=json; 
+        });
+
+        $.getJSON("https://raw.githubusercontent.com/joshua-lee/public_jsons_tea/master/index_to_flavor.json", function(json) {
+            index_to_flavor=json; 
+        });
+
+        $.get("https://raw.githubusercontent.com/joshua-lee/public_jsons_tea/master/co_oc.txt", function(csv){
+            cooc = csv;
+            cooc = cooc.trim()
+            cooc = JSON.parse(cooc)
+        });
+
+        function show_complements(){
+            if (flavs && flavs.length>0 && flavs.length<=3){
+                var suggested = get_complements(flavs,5)
+                var suggestString = ""
+
+                suggested.forEach(function(d){
+                    suggestString += d+ ", "
+                })
+               document.getElementById("suggest").innerHTML = "Consider these: " + suggestString.slice(0,-2);
+               document.getElementById("suggest").style.color = 'steelblue'
+            }
+            else{
+               document.getElementById("suggest").innerHTML = "";
+            }
+         }
+
+         function get_complements(flavors_query, topx){
+            sum_flavors = new Array(358+1).join('0').split('').map(parseFloat)
+
+            flavors_query.forEach(function(d){
+                sum_flavors = sum_flavors.map(function (num, idx) {
+                  return num + cooc[flavor_to_index[title(d)]][idx];
+                });
+            })
+
+            flavors_query.forEach(function(d){
+                sum_flavors[flavor_to_index[title(d)]]=0
+            })
+
+            var topflavorsIndices = findIndicesOfMax(sum_flavors,topx)
+            var topflavors = []
+
+            topflavorsIndices.forEach(function (d){
+                if (sum_flavors[d]>0){
+                    topflavors.push(index_to_flavor[d])
+                }
+            })
+
+            return topflavors;
+
+
+         }
+
+         function title(s){
+            return s[0].toUpperCase() + s.slice(1).toLowerCase()
+         }
+
+         function findIndicesOfMax(inp, count) {
+            var outp = [];
+            for (var i = 0; i < inp.length; i++) {
+                outp.push(i); // add index to output array
+                if (outp.length > count) {
+                    outp.sort(function(a, b) { return inp[b] - inp[a]; }); // descending sort the output array
+                    outp.pop(); // remove the last index (index of smallest element in output array)
+                }
+            }
+            return outp;
+
+         }
     </script>
     </body>
 </html>
