@@ -141,15 +141,15 @@
         var flavs = $("#search_input").tagsinput('items').itemsArray;
         var flavor_to_index, index_to_flavor, cooc;
 
-        $.getJSON("https://raw.githubusercontent.com/joshua-lee/public_jsons_tea/master/flavor_to_index.json", function(json) {
+        $.getJSON("/static/data/flavor_to_index.json", function(json) {
             flavor_to_index = json; 
         });
 
-        $.getJSON("https://raw.githubusercontent.com/joshua-lee/public_jsons_tea/master/index_to_flavor.json", function(json) {
+        $.getJSON("/static/data/index_to_flavor.json", function(json) {
             index_to_flavor = json; 
         });
 
-        $.get("https://raw.githubusercontent.com/joshua-lee/public_jsons_tea/master/co_oc.txt", function(csv) {
+        $.get("/static/data/co_oc.txt", function(csv) {
             cooc = csv;
             cooc = cooc.trim();
             cooc = JSON.parse(cooc);
