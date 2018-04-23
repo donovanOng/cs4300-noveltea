@@ -18,10 +18,12 @@
         <small class="text-muted">Switch to <a href="/?version=1">Version 1</a></small>
     </div>
     <main role="main" class="container">
+
     <div class="row justify-content-lg-center">
         <div class="search-container col-lg-8">
             <h1 class="site-name">{{ name }}</h1>
             <p class="lead"></p>
+            <p id="suggest"> </p>
             <form>
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -34,7 +36,6 @@
                     {% endif %}
                 </div>
             </form>
-        <p id="suggest"></p>
         </div>
         <div class="search-result col-lg-8 mt-4">
             {% if query %}
@@ -139,7 +140,10 @@
     }
 
     //Co_occurence matrix used 
-    var flavs= $("input").tagsinput('items').itemsArray;
+        document.getElementById("suggest").innerHTML = "this is filler"
+        document.getElementById("suggest").style.color= "white"
+
+        var flavs= $("input").tagsinput('items').itemsArray;
         var flavor_to_index, index_to_flavor, cooc;
 
         $.getJSON("https://raw.githubusercontent.com/joshua-lee/public_jsons_tea/master/flavor_to_index.json", function(json) {
@@ -168,7 +172,8 @@
                document.getElementById("suggest").style.color = 'steelblue'
             }
             else{
-               document.getElementById("suggest").innerHTML = "";
+               document.getElementById("suggest").innerHTML = "this is filler"
+               document.getElementById("suggest").style.color= "white"
             }
          }
 
