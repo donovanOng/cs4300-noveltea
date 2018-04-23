@@ -31,3 +31,6 @@ p.card-text {
 a.card-link {
     font-size: 12px;
 }
+.pagination {
+    justify-content: center;
+}
