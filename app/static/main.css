@@ -34,3 +34,6 @@ a.card-link {
 .pagination {
     justify-content: center;
 }
+.filter-box {
+    font-size: 0.85rem;
+}

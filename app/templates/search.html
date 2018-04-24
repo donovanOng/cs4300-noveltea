@@ -79,7 +79,7 @@
             {% if tea_types %}
             <div class="filter-box mb-3 bg-light p-3">
                 <h6 class="mb-1">Tea Type</h6>
-                <form id="teaTypeForm">
+                <form id="teaTypeForm" class="mb-0">
                     <input type="hidden" name="flavor" value="{{ query }}" />
                     {% if f_caffeine %}
                     <input type="hidden" name="notCaffeines" value="{{ f_caffeine }}" />
@@ -102,7 +102,7 @@
             {% if caffeines %}
             <div class="filter-box mb-3 bg-light p-3">
             <h6 class="mb-1">Caffeine</h6>
-            <form id="caffeineForm">
+            <form id="caffeineForm" class="mb-0">
                 <input type="hidden" name="flavor" value="{{ query }}" />
                 {% if f_teaType %}
                 <input type="hidden" name="notTeaTypes" value="{{ f_teaType }}" />
