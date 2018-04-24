@@ -56,15 +56,15 @@
       </script>
 </script>
     <!--  -->
-
     </head>
     <body>
     <div class="top-corner">
         <small class="text-muted">Data collected for this application is for academic purposes only.</small><br>
         <small class="text-muted">Built by {{ netid }}</small><br>
-        <small class="text-muted">Switch to <a href="/?version=1">Version 1</a></small>
+        <small class="text-muted">Switch to <a href="/?version=2">Version 2</a> | <a href="/?version=1">Version 1</a></small>
     </div>
     <main role="main" class="container">
+
     <div class="row justify-content-lg-center">
         <div class="search-container col-lg-8">
             <h1 class="site-name">{{ name }}</h1>
@@ -74,14 +74,14 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon3">Flavors</span>
                     </div>
-                    <input type="text" name="flavor" class="form-control" id="input" onchange= 'show_complements()'aria-describedby="basic-addon3" data-role="tagsinput" placeholder="citrus, floral...">
+                    <input type="text" name="flavor" class="form-control" id="search_input" onchange='showComplements()' aria-describedby="basic-addon3" data-role="tagsinput" placeholder="citrus, floral...">
                     <button id="btn-search" type="submit" class="btn btn-info"><span class="oi oi-magnifying-glass"></span></button>
                     {% if version %}
                     <input type="hidden" name="version" value="{{ version }}"/>
                     {% endif %}
                 </div>
             </form>
-        <p id="suggest"></p>
+            <p id="suggest" class="mb-0"></p>
         </div>
         <div class="search-result col-lg-8 mt-4">
             {% if query %}
@@ -110,10 +110,9 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ tea.name }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">by {{ tea.brand }}</h6>
-                        <p class="card-text mb-2">{{ tea.flavors }}</p>
-                        <p class="card-text mb-2">Tea Type: {{ tea.teaType }} | Steepster: {{ tea.ratingValue }} | Want It: {{ tea.wantIt }} | Own It: {{ tea.ownIt }} 
-                        </p>
-                        <a href="{{ tea.url }}" class="card-link">View on Steepser</a>
+                        <p class="card-text mb-1"><span class="font-weight-bold">Tea Type: </span>{{ tea.teaType }}</p>
+                        <p class="card-text mb-2"><span class="font-weight-bold">Flavors: </span>{{ tea.flavors }}</p>
+                        <p class="card-text mb-1">For more information,  <a href="{{ tea.url }}" class="card-link">view {{ tea.name }} on Steepster</a></p>
                     </div>
                 </div>
             </div>
@@ -175,82 +174,82 @@
     </div>
     </main><!-- /.container -->
     <script>
-    function checkSubmit(filterType) {
-        var filterList = $('.' + filterType + 'CB:not(:checked)').map(function() {return this.value;}).get().join(',')
-        if (filterList) {
-            $("#" + filterType + "Filter").val(filterList)
-        } else {
-            $("#" + filterType + "Filter").remove()
+        function checkSubmit(filterType) {
+            var filterList = $('.' + filterType + 'CB:not(:checked)').map(function() {return this.value;}).get().join(',');
+            if (filterList) {
+                $("#" + filterType + "Filter").val(filterList);
+            } else {
+                $("#" + filterType + "Filter").remove();
+            }
+            $("#" + filterType + 'Form').submit();
         }
-        $("#" + filterType + 'Form').submit()
-    }
 
-    //Co_occurence matrix used 
-    var flavs= $("input").tagsinput('items').itemsArray;
+        //Co_occurence matrix used 
+        var flavs = $("#search_input").tagsinput('items').itemsArray;
         var flavor_to_index, index_to_flavor, cooc;
 
-        $.getJSON("https://raw.githubusercontent.com/joshua-lee/public_jsons_tea/master/flavor_to_index.json", function(json) {
-            flavor_to_index=json; 
+        $.getJSON("/static/data/flavor_to_index.json", function(json) {
+            flavor_to_index = json; 
         });
 
-        $.getJSON("https://raw.githubusercontent.com/joshua-lee/public_jsons_tea/master/index_to_flavor.json", function(json) {
-            index_to_flavor=json; 
+        $.getJSON("/static/data/index_to_flavor.json", function(json) {
+            index_to_flavor = json; 
         });
 
-        $.get("https://raw.githubusercontent.com/joshua-lee/public_jsons_tea/master/co_oc.txt", function(csv){
+        $.get("/static/data/co_oc.txt", function(csv) {
             cooc = csv;
-            cooc = cooc.trim()
-            cooc = JSON.parse(cooc)
+            cooc = cooc.trim();
+            cooc = JSON.parse(cooc);
         });
 
-        function show_complements(){
+        function showComplements() {
             if (flavs && flavs.length>0 && flavs.length<=3){
-                var suggested = get_complements(flavs,5)
+                var suggested = getComplements(flavs, 5);
                 var suggestString = ""
-
                 suggested.forEach(function(d){
-                    suggestString += d+ ", "
+                    suggestString += "<a href='#' onclick='addFlavorToInput(\"" + d + "\")' class='ml-2'>" + d + "</a>";
                 })
-               document.getElementById("suggest").innerHTML = "Consider these: " + suggestString.slice(0,-2);
-               document.getElementById("suggest").style.color = 'steelblue'
+                document.getElementById("suggest").innerHTML = '<span class="font-italic font-weight-light">You might also like</span>' + suggestString;
+            } else {
+                document.getElementById("suggest").innerHTML = "";
             }
-            else{
-               document.getElementById("suggest").innerHTML = "";
-            }
-         }
+        }
 
-         function get_complements(flavors_query, topx){
-            sum_flavors = new Array(358+1).join('0').split('').map(parseFloat)
+        function addFlavorToInput(flavor) {
+            $('#search_input').tagsinput('add', flavor);
+            showComplements();
+        }
 
-            flavors_query.forEach(function(d){
+        function getComplements(flavors_query, topx) {
+            sum_flavors = new Array(358+1).join('0').split('').map(parseFloat);
+
+            flavors_query.forEach(function(d) {
                 sum_flavors = sum_flavors.map(function (num, idx) {
-                  return num + cooc[flavor_to_index[title(d)]][idx];
+                    return num + cooc[flavor_to_index[title(d)]][idx];
                 });
             })
 
-            flavors_query.forEach(function(d){
-                sum_flavors[flavor_to_index[title(d)]]=0
+            flavors_query.forEach(function(d) {
+                sum_flavors[flavor_to_index[title(d)]] = 0;
             })
 
-            var topflavorsIndices = findIndicesOfMax(sum_flavors,topx)
-            var topflavors = []
+            var topflavorsIndices = findIndicesOfMax(sum_flavors,topx);
+            var topflavors = [];
 
-            topflavorsIndices.forEach(function (d){
-                if (sum_flavors[d]>0){
-                    topflavors.push(index_to_flavor[d])
+            topflavorsIndices.forEach(function (d) {
+                if (sum_flavors[d]>0) {
+                    topflavors.push(index_to_flavor[d]);
                 }
             })
-
             return topflavors;
+        }
 
-
-         }
-
-         function title(s){
+        function title(s){
             return s[0].toUpperCase() + s.slice(1).toLowerCase()
-         }
+        }
 
-         function findIndicesOfMax(inp, count) {
+        function findIndicesOfMax(inp, count) {
+            //from https://stackoverflow.com/questions/11792158/optimized-javascript-code-to-find-3-largest-element-and-its-indexes-in-array
             var outp = [];
             for (var i = 0; i < inp.length; i++) {
                 outp.push(i); // add index to output array
@@ -260,8 +259,7 @@
                 }
             }
             return outp;
-
-         }
+        }
     </script>
     </body>
 </html>
