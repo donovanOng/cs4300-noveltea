@@ -16,8 +16,78 @@ def search():
     version = request.args.get('version')
     if version == "1":
         return search_v1()
-    else:
+    elif version == "2":
         return search_v2()
+    else:
+        return search()
+
+def search():
+    q_flavor_raw = request.args.get('flavor')
+    f_teaType = request.args.get('notTeaTypes', "")
+    f_caffeine = request.args.get('notCaffeines', "")
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+
+    pagination = None
+
+    if not q_flavor_raw:
+        q_flavor = ""
+        teas = []
+        output_message = ""
+        tea_types = []
+        caffeines = []
+    else:
+        q_flavor = ", ".join([flavor.title().strip() for flavor in q_flavor_raw.split(",")])
+
+        flavors_AND_query = " AND ".join(["teas.flavors LIKE '%" + flavor.title().strip() + "%'" for flavor in q_flavor_raw.split(",")])
+        raw_teas_AND = Tea.query.filter(flavors_AND_query).order_by(Tea.ratingValue.desc())
+
+        flavor_OR_query = " OR ".join(["teas.flavors LIKE '%" + flavor.title().strip() + "%'" for flavor in q_flavor_raw.split(",")])
+        raw_teas_OR = Tea.query.filter(flavor_OR_query).order_by(Tea.ratingValue.desc())
+
+        if (raw_teas_AND.count() + raw_teas_OR.count()) > 0:            
+            if HITS_RANK:
+                print "Found {} teas".format(raw_teas_AND.count() + raw_teas_OR.count())
+                hits_ranked_AND = hits_rank([tea.id for tea in raw_teas_AND.all()])
+                hits_ranked_OR = hits_rank([tea.id for tea in raw_teas_OR.all()])
+                hits_ranked_tea_id = hits_ranked_AND + [tea_id for tea_id in hits_ranked_OR if tea_id not in hits_ranked_AND]
+
+                print "Found {} teas after HITS algo".format(len(hits_ranked_tea_id))
+                raw_teas = Tea.query.filter(Tea.id.in_(hits_ranked_tea_id)).order_by(ordering_sql(hits_ranked_tea_id))
+            else:
+                ranked_AND = [tea.id for tea in raw_teas_AND.all()]
+                ranked_OR = [tea.id for tea in raw_teas_OR.all()]
+                ranked_tea_id = ranked_AND + [tea_id for tea_id in ranked_OR if tea_id not in ranked_AND]
+
+                raw_teas = Tea.query.filter(Tea.id.in_(ranked_tea_id)).order_by(ordering_sql(ranked_tea_id))
+        else:
+            raw_teas = raw_teas_AND
+
+        # Filters 
+        tea_types = [tea.teaType for tea in raw_teas.all()] if raw_teas.all() else []
+        tea_types = sorted(list(set(tea_types)))
+        tea_types = [(teaType, teaType in f_teaType.split(",")) for teaType in tea_types]
+
+        caffeines = [tea.caffeine for tea in raw_teas.all()] if raw_teas.all() else []
+        caffeines = sorted(list(set(caffeines)))
+        caffeines = [(caffeine, caffeine in f_caffeine.split(",")) for caffeine in caffeines]
+
+        if f_teaType:
+            raw_teas = raw_teas.filter(~Tea.teaType.in_(f_teaType.split(",")))
+        if f_caffeine:
+            raw_teas = raw_teas.filter(~Tea.caffeine.in_(f_caffeine.split(",")))
+
+        total = raw_teas.count()
+        teas = raw_teas.offset((page-1)*10).limit(10)
+            
+        pagination = Pagination(page=page, total=total, per_page=10, 
+                                bs_version=4, record_name="teas")
+
+    return render_template('search.html', name=project_name, netid=net_id, 
+                            query=q_flavor, teas=teas, 
+                            pagination=pagination,
+                            version=request.args.get('version'),
+                            tea_types=tea_types, caffeines=caffeines,
+                            f_teaType=f_teaType, f_caffeine=f_caffeine)
 
 def search_v2():
     q_flavor_raw = request.args.get('flavor')
@@ -80,7 +150,7 @@ def search_v2():
         pagination = Pagination(page=page, total=total, per_page=10, 
                                 bs_version=4, record_name="teas")
 
-    return render_template('search.html', name=project_name, netid=net_id, 
+    return render_template('search_v2.html', name=project_name, netid=net_id, 
                             query=q_flavor, teas=teas, 
                             pagination=pagination,
                             version=request.args.get('version'),
