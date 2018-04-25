@@ -1,9 +1,13 @@
-from . import * 
-from app.irsystem.models.tea import Tea
-from app.irsystem.models.helpers import *
-from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
+from collections import Counter
+
 from flask_paginate import Pagination, get_page_parameter
+
+from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
+from app.irsystem.models.helpers import *
+from app.irsystem.models.tea import Tea
 from settings import *
+
+from . import *
 
 project_name = "noveltea"
 members_name = "Benjamin Stevens, Bowen Gao, Joshua Lee:, Sasha Badov, Yong Lin Ong"
@@ -80,12 +84,14 @@ def search():
 
         # Filters 
         tea_types = [tea.teaType for tea in raw_teas.all()] if raw_teas.all() else []
-        tea_types = sorted(list(set(tea_types)))
-        tea_types = [(teaType, teaType in f_teaType.split(",")) for teaType in tea_types]
+        tea_types = Counter(tea_types)
+        tea_types = [(teaType, teaType in f_teaType.split(","), count) for teaType, count in tea_types.iteritems()]
+        tea_types = sorted(tea_types, key=lambda tea: tea[0])
 
         caffeines = [tea.caffeine for tea in raw_teas.all()] if raw_teas.all() else []
-        caffeines = sorted(list(set(caffeines)))
-        caffeines = [(caffeine, caffeine in f_caffeine.split(",")) for caffeine in caffeines]
+        caffeines = Counter(caffeines)
+        caffeines = [(caffeine, caffeine in f_caffeine.split(","), count) for caffeine, count in caffeines.iteritems()]
+        caffeines = sorted(caffeines, key=lambda caffeine: caffeine[0])
 
         if f_teaType:
             raw_teas = raw_teas.filter(~Tea.teaType.in_(f_teaType.split(",")))
