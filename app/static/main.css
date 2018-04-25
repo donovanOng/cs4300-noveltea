@@ -37,3 +37,6 @@ a.card-link {
 .filter-box {
     font-size: 0.85rem;
 }
+.card-body li {
+    font-size: 12px;
+}

@@ -21,6 +21,15 @@ def search():
     else:
         return search()
 
+@irsystem.route('getRelatedTeas/', methods=['GET'])
+def getRelatedTeas():
+    tea_id = request.args.get('tea_id')
+    print tea_id
+    related_tea_ids = query_tea_with_same_label(int(tea_id), 5)
+    print related_tea_ids
+    res = Tea.query.filter(Tea.id.in_(related_tea_ids)).order_by(ordering_sql(related_tea_ids)).all()
+    return jsonify([r.to_json() for r in res])
+
 def search():
     q_flavor_raw = request.args.get('flavor')
     f_teaType = request.args.get('notTeaTypes', "")
@@ -191,6 +200,30 @@ def search_v1():
                             query=q_flavor, teas=teas, 
                             pagination=pagination,
                             version=request.args.get('version'))
+
+def query_tea_with_same_label(q_id, top_n):
+    '''
+    This function takes a query of tea Id 
+    and return a list of (id, recommendation_score) pairs sorted by 
+    recommendation scores
+    
+    params:
+    q_id: integer, the id of the tea which you want to find teas similar with
+    top_n: integer, return top n results
+    
+    return:
+    list: a list of (id, recommendation_score) pairs which has the same label as q_id 
+            and sorted by their recommendation score
+    '''
+    import pandas as pd
+    id_label_df = pd.read_csv(os.path.join(APP_ROOT, "data/clusters.csv") )
+
+    q_label = int(id_label_df.label[id_label_df.id == q_id])
+    tmp_df = id_label_df[['id','recommendation']][id_label_df.label == q_label].\
+        sort_values('recommendation', ascending = False)
+
+    # return list(zip(tmp_df['id'].values[:top_n], tmp_df['recommendation'].values[:top_n]))
+    return list(tmp_df['id'].values[:top_n])
 
 def hits_rank(matchFlavors):
 
