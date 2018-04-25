@@ -54,3 +54,8 @@ a.card-link {
 .ft-green {
     color: #006341;
 }
+.marked {
+    background: #e3c383;
+    padding: 0 4px;
+    color: white;
+}

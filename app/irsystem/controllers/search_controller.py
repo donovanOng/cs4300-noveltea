@@ -38,38 +38,45 @@ def search():
 
     pagination = None
 
-    if not q_flavor_raw:
-        q_flavor = ""
-        teas = []
-        output_message = ""
-        tea_types = []
-        caffeines = []
-    else:
-        q_flavor = ", ".join([flavor.title().strip() for flavor in q_flavor_raw.split(",")])
+    # Formatted search query
+    q_flavor = ""
+    # List of teas
+    results = []
+    # Filters
+    tea_types, caffeines = [], []
 
-        flavors_AND_query = " AND ".join(["teas.flavors LIKE '%" + flavor.title().strip() + "%'" for flavor in q_flavor_raw.split(",")])
-        raw_teas_AND = Tea.query.filter(flavors_AND_query).order_by(Tea.ratingValue.desc())
+    if q_flavor_raw:
+        q_flavor = ", ".join([flavor.title().strip() for flavor in q_flavor_raw.split(",")])
 
         flavor_OR_query = " OR ".join(["teas.flavors LIKE '%" + flavor.title().strip() + "%'" for flavor in q_flavor_raw.split(",")])
         raw_teas_OR = Tea.query.filter(flavor_OR_query).order_by(Tea.ratingValue.desc())
 
-        if (raw_teas_AND.count() + raw_teas_OR.count()) > 0:            
+        if raw_teas_OR.count() > 0:   
+            
+            q_flavor_title = [flavor.title().strip() for flavor in q_flavor_raw.split(",")]
+            tea_ids_matched = []
+            for num_match in reversed(range(1, len(q_flavor_title)+1)):
+                tea_ids = []
+                for tea in raw_teas_OR.all():
+                    flavor_matches = sum([1 for flavor in tea.flavors.split(",") if flavor.strip() in q_flavor_title])
+                    if num_match == flavor_matches:
+                        tea_ids.append(tea.id)
+                tea_ids_matched.append(tea_ids)
+
             if HITS_RANK:
-                print "Found {} teas".format(raw_teas_AND.count() + raw_teas_OR.count())
-                hits_ranked_AND = hits_rank([tea.id for tea in raw_teas_AND.all()])
-                hits_ranked_OR = hits_rank([tea.id for tea in raw_teas_OR.all()])
-                hits_ranked_tea_id = hits_ranked_AND + [tea_id for tea_id in hits_ranked_OR if tea_id not in hits_ranked_AND]
-
-                print "Found {} teas after HITS algo".format(len(hits_ranked_tea_id))
+                hits_ranked_tea_id = []
+                for tea_ids in tea_ids_matched:
+                    hits_ranked_teas = hits_rank(tea_ids)
+                    hits_ranked_tea_id.extend(hits_ranked_teas)
                 raw_teas = Tea.query.filter(Tea.id.in_(hits_ranked_tea_id)).order_by(ordering_sql(hits_ranked_tea_id))
-            else:
-                ranked_AND = [tea.id for tea in raw_teas_AND.all()]
-                ranked_OR = [tea.id for tea in raw_teas_OR.all()]
-                ranked_tea_id = ranked_AND + [tea_id for tea_id in ranked_OR if tea_id not in ranked_AND]
 
+            else:
+                ranked_tea_id = []
+                for tea_ids in tea_ids_matched:
+                    ranked_tea_id.extend(tea_ids)
                 raw_teas = Tea.query.filter(Tea.id.in_(ranked_tea_id)).order_by(ordering_sql(ranked_tea_id))
         else:
-            raw_teas = raw_teas_AND
+            raw_teas = raw_teas_OR
 
         # Filters 
         tea_types = [tea.teaType for tea in raw_teas.all()] if raw_teas.all() else []
@@ -87,13 +94,27 @@ def search():
 
         total = raw_teas.count()
         teas = raw_teas.offset((page-1)*10).limit(10)
+
+        results = []
+        for tea in teas:
+            matched_flavors = ""
+            marked_flavors = ""
+            for flavor in tea.flavors.split(','):
+                if flavor.strip() in q_flavor_title:
+                    matched_flavors += "<span class=\"marked\">" + flavor.strip() + "</span> "
+                else:
+                    marked_flavors += flavor + ", "
+            tea.marked_flavors = matched_flavors + marked_flavors[:-2]
+            results.append(tea)
+
             
         pagination = Pagination(page=page, total=total, per_page=10, 
                                 bs_version=4, record_name="teas")
 
     return render_template('search.html', name=project_name, netid=net_id, 
-                            query=q_flavor, teas=teas, 
-                            pagination=pagination,
+                            query=q_flavor, teas=results, 
+                            pagination=pagination, page=(page-1)*10, 
+                            multi_query=len(q_flavor.split(','))>1,
                             version=request.args.get('version'),
                             tea_types=tea_types, caffeines=caffeines,
                             f_teaType=f_teaType, f_caffeine=f_caffeine)
