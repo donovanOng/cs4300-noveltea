@@ -40,3 +40,17 @@ a.card-link {
 .card-body li {
     font-size: 12px;
 }
+.bg-gold {
+    background: #e3c383;
+}
+.btn-gold  {
+    background: #e3c383;
+    border-color: #e3c383;
+    color: white;
+}
+.btn-gold:hover {
+    opacity: 0.9;
+}
+.ft-green {
+    color: #006341;
+}

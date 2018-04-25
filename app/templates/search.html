@@ -26,10 +26,10 @@
             <form>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon3">Flavors</span>
+                        <span class="input-group-text bg-white font-weight-bold" id="basic-addon3">Flavors</span>
                     </div>
                     <input type="text" name="flavor" class="form-control" id="search_input" onchange='showComplements()' aria-describedby="basic-addon3" data-role="tagsinput" placeholder="citrus, floral...">
-                    <button id="btn-search" type="submit" class="btn btn-info"><span class="oi oi-magnifying-glass"></span></button>
+                    <button id="btn-search" type="submit" class="btn btn-gold"><span class="oi oi-magnifying-glass"></span></button>
                     {% if version %}
                     <input type="hidden" name="version" value="{{ version }}"/>
                     {% endif %}
@@ -43,11 +43,11 @@
                 <div class="col-7 bg-light p-3">
                     <h5 class="m-0">
                         <small class="text-muted">Best tea with</small>
-                        {{query}}
+                        <span class="ft-green">{{query}}</span>
                         <small class="text-muted">flavor</small>
                     </h5>
                 </div>
-                <div class="col-5 bg-light p-3 text-right">
+                <div class="col-5 bg-light text-right" style="padding: 1.15rem!important">
                     <small class="text-muted">{{ pagination.info }}</small>
                 </div>
             </div>
@@ -86,7 +86,7 @@
         <div class="filters col-lg-3 mt-4">
             {% if tea_types %}
             <div class="filter-box mb-3 bg-light p-3">
-                <h6 class="mb-1">Tea Type</h6>
+                <h6 class="mb-1 ft-green">Tea Type</h6>
                 <form id="teaTypeForm" class="mb-0">
                     <input type="hidden" name="flavor" value="{{ query }}" />
                     {% if f_caffeine %}
@@ -109,7 +109,7 @@
 
             {% if caffeines %}
             <div class="filter-box mb-3 bg-light p-3">
-            <h6 class="mb-1">Caffeine</h6>
+            <h6 class="mb-1 ft-green">Caffeine</h6>
             <form id="caffeineForm" class="mb-0">
                 <input type="hidden" name="flavor" value="{{ query }}" />
                 {% if f_teaType %}
