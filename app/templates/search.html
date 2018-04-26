@@ -150,8 +150,11 @@
                     teas.forEach(function(tea) {
                         tea = JSON.parse(tea)
                         teaString += "<li><a href=\"" + tea.url + "\">" + tea.name + "</a> by " + tea.brand + "</li>"
-
                     })
+                    if (!teas) { 
+                        teaString = "<div class=\"card card-body bg-light\">"
+                        teaString += "<p class=\"mb-0 font-weight-bold\" style=\"font-size:0.8rem\">Sorry! No similar teas found.</p>"; 
+                    }
                     document.getElementById("collapse"+$this.attr('data-href')).innerHTML = teaString + "</div>";
                 });
             }
