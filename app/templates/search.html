@@ -231,7 +231,14 @@
         }
 
         function title(s){
-            return s[0].toUpperCase() + s.slice(1).toLowerCase()
+            words = s.split(" ")
+            result = ""
+
+            words.forEach(function(d){
+                result+= d[0].toUpperCase() + d.slice(1).toLowerCase() + " "
+            })
+            
+            return result.trim()
         }
 
         function findIndicesOfMax(inp, count) {
