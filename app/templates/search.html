@@ -144,7 +144,7 @@
         $('.collapse').on('show.bs.collapse', function () {
             var $this = $(this);
             if ($this.attr('data-href')){   
-                document.getElementById("collapse"+$this.attr('data-href')).innerHTML = "<div class=\"card card-body\">Loading</div>";
+                document.getElementById("collapse"+$this.attr('data-href')).innerHTML = "<div class=\"card card-body\">Loading...</div>";
                 $.getJSON("getRelatedTeas/?tea_id=" + $this.attr('data-href'), function(teas) {
                     if (teas.length == 0) { 
                         var teaString = "<div class=\"card card-body bg-light\">"
