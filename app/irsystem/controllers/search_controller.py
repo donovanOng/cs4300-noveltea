@@ -242,15 +242,13 @@ def query_tea_with_same_label(q_id, top_n):
     list: a list of (id, recommendation_score) pairs which has the same label as q_id 
             and sorted by their recommendation score
     '''
-    import pandas as pd
-    id_label_df = pd.read_csv(os.path.join(APP_ROOT, "data/clusters.csv") )
 
-    q_label = int(id_label_df.label[id_label_df.id == q_id])
-    tmp_df = id_label_df[['id','recommendation']][id_label_df.label == q_label].\
-        sort_values('recommendation', ascending = False)
+    import pickle
 
-    # return list(zip(tmp_df['id'].values[:top_n], tmp_df['recommendation'].values[:top_n]))
-    return list(tmp_df['id'].values[:top_n])
+    with open(os.path.join(APP_ROOT, "data/sim_id_dic.pkl"), "rb") as sim_file:
+        sim_tea_dictionary = pickle.load(sim_file)
+
+    return [tea[0] for tea in sim_tea_dictionary[q_id]]
 
 def hits_rank(matchFlavors):
 
