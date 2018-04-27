@@ -29,9 +29,9 @@ def search():
 def getRelatedTeas():
     tea_id = request.args.get('tea_id')
     # print tea_id
-    related_tea_ids = query_tea_with_same_label(int(tea_id))
-    # print related_tea_ids
-    res = Tea.query.filter(Tea.id.in_(related_tea_ids)).order_by(ordering_sql(related_tea_ids)).all()
+    related_tea_ids = query_tea_with_same_label(int(tea_id))[:5]
+    print related_tea_ids
+    res = Tea.query.filter(Tea.steepsterID.in_(related_tea_ids)).order_by(ordering_sql(related_tea_ids)).all()
     return jsonify([r.to_json() for r in res])
 
 def search():
@@ -64,7 +64,7 @@ def search():
                 for tea in raw_teas_OR.all():
                     flavor_matches = sum([1 for flavor in tea.flavors.split(",") if flavor.strip() in q_flavor_title])
                     if num_match == flavor_matches:
-                        tea_ids.append(tea.id)
+                        tea_ids.append(tea.steepsterID)
                 tea_ids_matched.append(tea_ids)
 
             if HITS_RANK:
@@ -72,13 +72,13 @@ def search():
                 for tea_ids in tea_ids_matched:
                     hits_ranked_teas = hits_rank(tea_ids)
                     hits_ranked_tea_id.extend(hits_ranked_teas)
-                raw_teas = Tea.query.filter(Tea.id.in_(hits_ranked_tea_id)).order_by(ordering_sql(hits_ranked_tea_id))
+                raw_teas = Tea.query.filter(Tea.steepsterID.in_(hits_ranked_tea_id)).order_by(ordering_sql(hits_ranked_tea_id))
 
             else:
                 ranked_tea_id = []
                 for tea_ids in tea_ids_matched:
                     ranked_tea_id.extend(tea_ids)
-                raw_teas = Tea.query.filter(Tea.id.in_(ranked_tea_id)).order_by(ordering_sql(ranked_tea_id))
+                raw_teas = Tea.query.filter(Tea.steepsterID.in_(ranked_tea_id)).order_by(ordering_sql(ranked_tea_id))
         else:
             raw_teas = raw_teas_OR
 
@@ -150,18 +150,18 @@ def search_v2():
         if (raw_teas_AND.count() + raw_teas_OR.count()) > 0:            
             if HITS_RANK:
                 print "Found {} teas".format(raw_teas_AND.count() + raw_teas_OR.count())
-                hits_ranked_AND = hits_rank([tea.id for tea in raw_teas_AND.all()])
-                hits_ranked_OR = hits_rank([tea.id for tea in raw_teas_OR.all()])
+                hits_ranked_AND = hits_rank([tea.steepsterID for tea in raw_teas_AND.all()])
+                hits_ranked_OR = hits_rank([tea.steepsterID for tea in raw_teas_OR.all()])
                 hits_ranked_tea_id = hits_ranked_AND + [tea_id for tea_id in hits_ranked_OR if tea_id not in hits_ranked_AND]
 
                 print "Found {} teas after HITS algo".format(len(hits_ranked_tea_id))
-                raw_teas = Tea.query.filter(Tea.id.in_(hits_ranked_tea_id)).order_by(ordering_sql(hits_ranked_tea_id))
+                raw_teas = Tea.query.filter(Tea.steepsterID.in_(hits_ranked_tea_id)).order_by(ordering_sql(hits_ranked_tea_id))
             else:
-                ranked_AND = [tea.id for tea in raw_teas_AND.all()]
-                ranked_OR = [tea.id for tea in raw_teas_OR.all()]
+                ranked_AND = [tea.steepsterID for tea in raw_teas_AND.all()]
+                ranked_OR = [tea.steepsterID for tea in raw_teas_OR.all()]
                 ranked_tea_id = ranked_AND + [tea_id for tea_id in ranked_OR if tea_id not in ranked_AND]
 
-                raw_teas = Tea.query.filter(Tea.id.in_(ranked_tea_id)).order_by(ordering_sql(ranked_tea_id))
+                raw_teas = Tea.query.filter(Tea.steepsterID.in_(ranked_tea_id)).order_by(ordering_sql(ranked_tea_id))
         else:
             raw_teas = raw_teas_AND
 
@@ -206,16 +206,16 @@ def search_v1():
         raw_teas = Tea.query.filter(flavor_query).order_by(Tea.ratingValue.desc())
         if HITS_RANK and raw_teas.count() > 0:
             # print "Found {} teas".format(raw_teas.count())
-            hits_ranked_tea_id = hits_rank([tea.id for tea in raw_teas.all()])
+            hits_ranked_tea_id = hits_rank([tea.steepsterID for tea in raw_teas.all()])
             # print "Found {} teas after HITS algo".format(len(hits_ranked_tea_id))
             if hits_ranked_tea_id:
                 # https://stackoverflow.com/questions/29326297/sqlalchemy-filter-by-field-in-list-but-keep-original-order
                 from sqlalchemy.sql.expression import case
                 ordering = case(
                     {id: index for index, id in enumerate(hits_ranked_tea_id)},
-                    value=Tea.id
+                    value=Tea.steepsterID
                 )
-                raw_teas = Tea.query.filter(Tea.id.in_(hits_ranked_tea_id)).order_by(ordering)
+                raw_teas = Tea.query.filter(Tea.steepsterID.in_(hits_ranked_tea_id)).order_by(ordering)
         total = raw_teas.count()
         teas = raw_teas.offset((page-1)*10).limit(10)
 
@@ -265,6 +265,6 @@ def ordering_sql(ranked_list):
     from sqlalchemy.sql.expression import case
     ordering = case(
         {id: index for index, id in enumerate(ranked_list)},
-        value=Tea.id
+        value=Tea.steepsterID
     )
     return ordering

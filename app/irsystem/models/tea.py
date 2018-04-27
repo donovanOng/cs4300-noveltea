@@ -45,6 +45,7 @@ class OutputMixin(object):
 class Tea(OutputMixin, Base):
     __tablename__ = 'teas'
 
+    steepsterID = db.Column(db.Integer)
     name = db.Column(db.String(128), nullable = False)
     brand = db.Column(db.String(128))
     reviewCount = db.Column(db.Float)
@@ -61,6 +62,7 @@ class Tea(OutputMixin, Base):
     url = db.Column(db.String)
 
     def __init__(self, **kwargs):
+        self.steepsterID = kwargs.get('id', None)
         self.name = kwargs.get('name', None)
         self.brand = kwargs.get('brand', None)
         self.reviewCount = kwargs.get('reviewCount', None)

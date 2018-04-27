@@ -71,11 +71,11 @@
                             <p class="card-text mb-1"><span class="font-weight-bold">Tea Type: </span>{{ tea.teaType }}</p>
                             <p class="card-text mb-2"><span class="font-weight-bold">Flavors: </span>{{ tea.marked_flavors|safe }}</p>
                             <p class="card-text mb-2">
-                            <a class="" data-toggle="collapse" href="#collapse{{ tea.id }}" role="button" aria-expanded="false" aria-controls="collapse{{ tea.id }}">
+                            <a class="" data-toggle="collapse" href="#collapse{{ tea.steepsterID }}" role="button" aria-expanded="false" aria-controls="collapse{{ tea.steepsterID }}">
                                 View similar teas
                             </a>
                             </p>
-                            <div class="collapse mb-2" data-href="{{ tea.id }}" id="collapse{{ tea.id }}"></div>
+                            <div class="collapse mb-2" data-href="{{ tea.steepsterID }}" id="collapse{{ tea.steepsterID }}"></div>
                             <hr>
                             <p class="card-text mt-2 mb-1 text-muted">For more information,  <a href="{{ tea.url }}" class="card-link">view {{ tea.name }} on Steepster</a></p>
                         </div>
@@ -90,7 +90,7 @@
             {% endif %}
         </div>
         {% if teas %}
-        <div class="filters col-lg-3 mt-4 d-none d-lg-block">
+        <div class="filters col-lg-4 mt-4 d-none d-lg-block">
             {% if tea_types %}
             <div class="filter-box mb-3 bg-light p-3">
                 <h6 class="mb-1 ft-green">Tea Type</h6>
