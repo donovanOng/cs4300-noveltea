@@ -28,9 +28,9 @@ def search():
 @irsystem.route('getRelatedTeas/', methods=['GET'])
 def getRelatedTeas():
     tea_id = request.args.get('tea_id')
-    print tea_id
-    related_tea_ids = query_tea_with_same_label(int(tea_id), 5)
-    print related_tea_ids
+    # print tea_id
+    related_tea_ids = query_tea_with_same_label(int(tea_id))
+    # print related_tea_ids
     res = Tea.query.filter(Tea.id.in_(related_tea_ids)).order_by(ordering_sql(related_tea_ids)).all()
     return jsonify([r.to_json() for r in res])
 
@@ -113,7 +113,6 @@ def search():
             tea.marked_flavors = matched_flavors + marked_flavors[:-2]
             results.append(tea)
 
-            
         pagination = Pagination(page=page, total=total, per_page=10, 
                                 bs_version=4, record_name="teas")
 
@@ -228,19 +227,16 @@ def search_v1():
                             pagination=pagination,
                             version=request.args.get('version'))
 
-def query_tea_with_same_label(q_id, top_n):
+def query_tea_with_same_label(q_id):
     '''
-    This function takes a query of tea Id 
-    and return a list of (id, recommendation_score) pairs sorted by 
-    recommendation scores
+    This function takes a query of tea id 
+    and return a list of id of similar teas.
     
     params:
     q_id: integer, the id of the tea which you want to find teas similar with
-    top_n: integer, return top n results
     
     return:
-    list: a list of (id, recommendation_score) pairs which has the same label as q_id 
-            and sorted by their recommendation score
+    list: a list of id of similar teas
     '''
 
     import pickle
