@@ -9,7 +9,56 @@
         <script src="/static/vendor/bootstrap4-tagsinput/tagsinput.js"></script>
         <link href="/static/vendor/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
         <script src="http://d3js.org/d3.v4.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="/static/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+        <link rel="stylesheet" href="/static/jquery-ui-1.12.1.custom/jquery-ui.theme.css">
+
+        <!--  -->
+      <script>
+      $( function() {
+        function split( val ) {
+          return val.split( /,\s*/ );
+        }
+        function extractLast( term ) {
+          return split( term ).pop();
+        }
+        ($( "input" ))
+          // don't navigate away from the field on tab when selecting an item
+          .on( "keydown", function( event ) {
+
+            if ( event.keyCode === $.ui.keyCode.TAB &&
+                $( this ).autocomplete( "instance" ).menu.active ) {
+              event.preventDefault();
+            }
+          })
+          .autocomplete({
+            source: Object.keys(flavor_to_index).map(x => x.toLowerCase()),
+            search: function() {
+              // custom minLength
+              var term = extractLast( this.value );
+              if ( term.length < 2 ) {
+                return false;
+              }
+            },
+            focus: function() {
+              // prevent value inserted on focus
+              console.log("focus")
+              return false;
+            },
+            select: function( event, ui ) {
+              var terms = split( this.value );
+              // remove the current input
+              terms.pop();
+              addFlavorToInput(ui.item.value)
+              this.value = ""
+
+              return false;
+            }
+          })
+          ;
+      } );
+      </script>
+</script>
+    <!--  -->
     </head>
     <body>
     <div class="top-corner">
