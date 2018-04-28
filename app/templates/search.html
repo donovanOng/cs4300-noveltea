@@ -75,10 +75,10 @@
             <form>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon3">Flavors</span>
+                        <span class="input-group-text bg-white font-weight-bold" id="basic-addon3">Flavors</span>
                     </div>
                     <input type="text" name="flavor" class="form-control" id="search_input" onchange='showComplements()' aria-describedby="basic-addon3" data-role="tagsinput" placeholder="citrus, floral...">
-                    <button id="btn-search" type="submit" class="btn btn-info"><span class="oi oi-magnifying-glass"></span></button>
+                    <button id="btn-search" type="submit" class="btn btn-gold"><span class="oi oi-magnifying-glass"></span></button>
                     {% if version %}
                     <input type="hidden" name="version" value="{{ version }}"/>
                     {% endif %}
@@ -89,34 +89,47 @@
         <div class="search-result col-lg-8 mt-4">
             {% if query %}
             <div class="row align-items-center pl-3 pr-3">
-                <div class="col-7 bg-light p-3">
+                <div class="col-md-7 bg-light p-3">
                     <h5 class="m-0">
                         <small class="text-muted">Best tea with</small>
-                        {{query}}
+                        <span class="ft-green">{{query}}</span>
+                        {% if multi_query %}
+                        <small class="text-muted">flavors</small>
+                        {% else %}
                         <small class="text-muted">flavor</small>
+                        {% endif %}
                     </h5>
                 </div>
-                <div class="col-5 bg-light p-3 text-right">
+                <div class="col-md-5 bg-light text-right" style="padding: 1.15rem!important">
                     <small class="text-muted">{{ pagination.info }}</small>
                 </div>
             </div>
             {% endif %}
-            {% if teas and teas.count() > 0 %}
+            {% if teas %}
             <div class="mb-3">
             {% for tea in teas %}  
             <div class="card mt-2">
             <div class="row align-items-center">
-                <div class="col-md-3 pl-4">
-                    <img class="card-img-top" src="{{ tea.imageUrl }}" alt="{{ tea.name }}" onError="this.onerror=null;this.src='https://media.steepster.com/api/file/anN07UThRu6hWl3o9Dvt/convert?fit=crop&h=190&w=190';">
-                </div>
-                <div class="col-md-9 pl-0">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ tea.name }}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">by {{ tea.brand }}</h6>
-                        <p class="card-text mb-1"><span class="font-weight-bold">Tea Type: </span>{{ tea.teaType }}</p>
-                        <p class="card-text mb-2"><span class="font-weight-bold">Flavors: </span>{{ tea.flavors }}</p>
-                        <p class="card-text mb-1">For more information,  <a href="{{ tea.url }}" class="card-link">view {{ tea.name }} on Steepster</a></p>
+                <div class="col-md-12">
+                <div class="media">
+                    <img class="card-img-top align-self-start mt-4 ml-4" style="width:120px"src="{{ tea.imageUrl }}" alt="{{ tea.name }}" onError="this.onerror=null;this.src='https://media.steepster.com/api/file/anN07UThRu6hWl3o9Dvt/convert?fit=crop&h=190&w=190';">
+                    <div class="media-body">
+                        <div class="card-body">
+                            <h5 class="card-title"><span class="text-muted mr-1 font-weight-light">{{loop.index0+1+page}}.</span>{{ tea.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">by {{ tea.brand }}</h6>
+                            <p class="card-text mb-1"><span class="font-weight-bold">Tea Type: </span>{{ tea.teaType }}</p>
+                            <p class="card-text mb-2"><span class="font-weight-bold">Flavors: </span>{{ tea.marked_flavors|safe }}</p>
+                            <p class="card-text mb-2">
+                            <a class="" data-toggle="collapse" href="#collapse{{ tea.steepsterID }}" role="button" aria-expanded="false" aria-controls="collapse{{ tea.steepsterID }}">
+                                View similar teas
+                            </a>
+                            </p>
+                            <div class="collapse mb-2" data-href="{{ tea.steepsterID }}" id="collapse{{ tea.steepsterID }}"></div>
+                            <hr>
+                            <p class="card-text mt-2 mb-1 text-muted">For more information,  <a href="{{ tea.url }}" class="card-link">view {{ tea.name }} on Steepster</a></p>
+                        </div>
                     </div>
+                </div>
                 </div>
             </div>
             </div>
@@ -125,12 +138,12 @@
             {{ pagination.links }}
             {% endif %}
         </div>
-        {% if teas and teas.count() > 0 %}
-        <div class="filters col-lg-3 mt-4">
+        {% if teas %}
+        <div class="filters col-lg-4 mt-4 d-none d-lg-block">
             {% if tea_types %}
             <div class="filter-box mb-3 bg-light p-3">
-                <h6 class="mb-1">Tea Type</h6>
-                <form id="teaTypeForm">
+                <h6 class="mb-1 ft-green">Tea Type</h6>
+                <form id="teaTypeForm" class="mb-0">
                     <input type="hidden" name="flavor" value="{{ query }}" />
                     {% if f_caffeine %}
                     <input type="hidden" name="notCaffeines" value="{{ f_caffeine }}" />
@@ -143,7 +156,7 @@
                         {% else %}
                         <input class="form-check-input teaTypeCB" type="checkbox" id="id_{{teaType[0]}}" value="{{teaType[0]}}" onclick="checkSubmit('teaType')">
                         {% endif %}
-                        <label class="form-check-label" for="id_{{teaType[0]}}">{{teaType[0]}}</label>
+                        <label class="form-check-label" for="id_{{teaType[0]}}">{{teaType[0]}} <span class="text-muted">({{teaType[2]}})</span></label>
                     </div>
                     {% endfor %}
                 </form>
@@ -152,8 +165,8 @@
 
             {% if caffeines %}
             <div class="filter-box mb-3 bg-light p-3">
-            <h6 class="mb-1">Caffeine</h6>
-            <form id="caffeineForm">
+            <h6 class="mb-1 ft-green">Caffeine</h6>
+            <form id="caffeineForm" class="mb-0">
                 <input type="hidden" name="flavor" value="{{ query }}" />
                 {% if f_teaType %}
                 <input type="hidden" name="notTeaTypes" value="{{ f_teaType }}" />
@@ -166,7 +179,7 @@
                     {% else %}
                     <input class="form-check-input caffeineCB" type="checkbox" id="id_{{caffeine[0]}}" value="{{caffeine[0]}}" onclick="checkSubmit('caffeine')">
                     {% endif %}
-                    <label class="form-check-label" for="id_{{caffeine[0]}}">{{caffeine[0]}}</label>
+                    <label class="form-check-label" for="id_{{caffeine[0]}}">{{caffeine[0]}} <span class="text-muted">({{caffeine[2]}})</span></label>
                 </div>
                 {% endfor %}
             </form>
@@ -177,6 +190,25 @@
     </div>
     </main><!-- /.container -->
     <script>
+        $('.collapse').on('show.bs.collapse', function () {
+            var $this = $(this);
+            if ($this.attr('data-href')){   
+                document.getElementById("collapse"+$this.attr('data-href')).innerHTML = "<div class=\"card card-body\">Loading...</div>";
+                $.getJSON("getRelatedTeas/?tea_id=" + $this.attr('data-href'), function(teas) {
+                    if (teas.length == 0) { 
+                        var teaString = "<div class=\"card card-body bg-light\">"
+                        teaString += "<p class=\"mb-0 font-weight-bold\" style=\"font-size:0.8rem\">Sorry! No similar teas found.</p>"; 
+                    } else {
+                        var teaString = "<div class=\"card card-body bg-light\"><p class=\"mb-2 font-weight-bold\">Similar Teas:</p>";
+                        teas.forEach(function(tea) {
+                            tea = JSON.parse(tea)
+                            teaString += "<li><a href=\"" + tea.url + "\">" + tea.name + "</a> by " + tea.brand + "</li>"
+                        })
+                    }
+                    document.getElementById("collapse"+$this.attr('data-href')).innerHTML = teaString + "</div>";
+                });
+            }
+        })
         function checkSubmit(filterType) {
             var filterList = $('.' + filterType + 'CB:not(:checked)').map(function() {return this.value;}).get().join(',');
             if (filterList) {
@@ -248,7 +280,14 @@
         }
 
         function title(s){
-            return s[0].toUpperCase() + s.slice(1).toLowerCase()
+            words = s.split(" ")
+            result = ""
+
+            words.forEach(function(d){
+                result+= d[0].toUpperCase() + d.slice(1).toLowerCase() + " "
+            })
+            
+            return result.trim()
         }
 
         function findIndicesOfMax(inp, count) {

@@ -1,8 +1,51 @@
+import json
+from uuid import UUID
+
+from sqlalchemy.ext.declarative import DeclarativeMeta
+
 from . import *
 
-class Tea(Base):
+# From: http://blog.mmast.net/sqlalchemy-serialize-json
+class OutputMixin(object):
+    RELATIONSHIPS_TO_DICT = False
+
+    def __iter__(self):
+        return self.to_dict().iteritems()
+
+    def to_dict(self, rel=None, backref=None):
+        if rel is None:
+            rel = self.RELATIONSHIPS_TO_DICT
+        res = {column.key: getattr(self, attr)
+               for attr, column in self.__mapper__.c.items()}
+        if rel:
+            for attr, relation in self.__mapper__.relationships.items():
+                # Avoid recursive loop between to tables.
+                if backref == relation.table:
+                    continue
+                value = getattr(self, attr)
+                if value is None:
+                    res[relation.key] = None
+                elif isinstance(value.__class__, DeclarativeMeta):
+                    res[relation.key] = value.to_dict(backref=self.__table__)
+                else:
+                    res[relation.key] = [i.to_dict(backref=self.__table__)
+                                         for i in value]
+        return res
+
+    def to_json(self, rel=None):
+        def extended_encoder(x):
+            if isinstance(x, type(datetime)):
+                return x.isoformat()
+            if isinstance(x, UUID):
+                return str(x)
+        if rel is None:
+            rel = self.RELATIONSHIPS_TO_DICT
+        return json.dumps(self.to_dict(rel), default=extended_encoder)
+        
+class Tea(OutputMixin, Base):
     __tablename__ = 'teas'
 
+    steepsterID = db.Column(db.Integer)
     name = db.Column(db.String(128), nullable = False)
     brand = db.Column(db.String(128))
     reviewCount = db.Column(db.Float)
@@ -19,6 +62,7 @@ class Tea(Base):
     url = db.Column(db.String)
 
     def __init__(self, **kwargs):
+        self.steepsterID = kwargs.get('id', None)
         self.name = kwargs.get('name', None)
         self.brand = kwargs.get('brand', None)
         self.reviewCount = kwargs.get('reviewCount', None)
