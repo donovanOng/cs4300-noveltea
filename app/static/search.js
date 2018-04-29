@@ -1,7 +1,3 @@
-$(function () {
-    $('[data-toggle="popover"]').popover()
-})
-
 $('.collapse').on('show.bs.collapse', function () {
     var $this = $(this);
     if ($this.attr('data-href')) {
@@ -40,19 +36,44 @@ function checkSubmit(filterType) {
     $("#" + filterType + 'Form').submit();
 }
 
-$('input').on('beforeItemAdd', function(event) { 
-    var flavors = Object.keys(flavor_to_index).map(x => x.toLowerCase())
-    if (flavors.indexOf(event.item) < 0) {
-        event.cancel = true
-    }
-});
-
-//Co_occurence matrix used 
+// Co_occurence matrix used 
 var flavs = $("#search_input").tagsinput('items').itemsArray;
 var flavor_to_index, index_to_flavor, cooc;
 
 $.getJSON("/static/data/flavor_to_index.json", function (json) {
     flavor_to_index = json;
+
+    $("input")
+    // don't navigate away from the field on tab when selecting an item
+    .on("keydown", function (event) {
+        if (event.keyCode === $.ui.keyCode.TAB &&
+            $(this).autocomplete("instance").menu.active) {
+            event.preventDefault();
+        }
+    })
+    .autocomplete({
+        source: Object.keys(flavor_to_index).map(x => x.toLowerCase()),
+        search: function () {
+            // custom minLength
+            var term = extractLast(this.value);
+            if (term.length < 2) {
+                return false;
+            }
+        },
+        focus: function () {
+            // prevent value inserted on focus
+            return false;
+        },
+        select: function (event, ui) {
+            var terms = split(this.value);
+            // remove the current input
+            terms.pop();
+            addFlavorToInput(ui.item.value)
+            this.value = ""
+
+            return false;
+        }
+    });
 });
 
 $.getJSON("/static/data/index_to_flavor.json", function (json) {
@@ -121,7 +142,7 @@ function title(s) {
 }
 
 function findIndicesOfMax(inp, count) {
-    //from https://stackoverflow.com/questions/11792158/optimized-javascript-code-to-find-3-largest-element-and-its-indexes-in-array
+    // Src: https://stackoverflow.com/questions/11792158/optimized-javascript-code-to-find-3-largest-element-and-its-indexes-in-array
     var outp = [];
     for (var i = 0; i < inp.length; i++) {
         outp.push(i); // add index to output array
@@ -135,44 +156,18 @@ function findIndicesOfMax(inp, count) {
     return outp;
 }
 
-$(function () {
-    function split(val) {
-        return val.split(/,\s*/);
+function split(val) {
+    return val.split(/,\s*/);
+}
+
+function extractLast(term) {
+    return split(term).pop();
+}
+
+$('input').on('beforeItemAdd', function(event) { 
+    var flavors = Object.keys(flavor_to_index).map(x => x.toLowerCase())
+    if (flavors.indexOf(event.item) < 0) {
+        event.cancel = true
     }
-
-    function extractLast(term) {
-        return split(term).pop();
-    }
-
-    $("input")
-    // don't navigate away from the field on tab when selecting an item
-    .on("keydown", function (event) {
-            if (event.keyCode === $.ui.keyCode.TAB &&
-                $(this).autocomplete("instance").menu.active) {
-                event.preventDefault();
-            }
-        })
-    .autocomplete({
-        source: Object.keys(flavor_to_index).map(x => x.toLowerCase()),
-        search: function () {
-            // custom minLength
-            var term = extractLast(this.value);
-            if (term.length < 2) {
-                return false;
-            }
-        },
-        focus: function () {
-            // prevent value inserted on focus
-            return false;
-        },
-        select: function (event, ui) {
-            var terms = split(this.value);
-            // remove the current input
-            terms.pop();
-            addFlavorToInput(ui.item.value)
-            this.value = ""
-
-            return false;
-        }
-    });
 });
+
