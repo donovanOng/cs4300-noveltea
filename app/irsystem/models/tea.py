@@ -41,7 +41,7 @@ class OutputMixin(object):
         if rel is None:
             rel = self.RELATIONSHIPS_TO_DICT
         return json.dumps(self.to_dict(rel), default=extended_encoder)
-        
+
 class Tea(OutputMixin, Base):
     __tablename__ = 'teas'
 
@@ -60,6 +60,11 @@ class Tea(OutputMixin, Base):
     ownIt = db.Column(db.Float)
     imageUrl = db.Column(db.String(400))
     url = db.Column(db.String)
+    review1 = db.Column(db.String)
+    review2 = db.Column(db.String)
+    review3 = db.Column(db.String)
+    features = db.Column(db.String)
+    features_flavors = db.Column(db.String)
 
     def __init__(self, **kwargs):
         self.steepsterID = kwargs.get('id', None)
@@ -77,7 +82,12 @@ class Tea(OutputMixin, Base):
         self.ownIt = kwargs.get('ownIt', None)
         self.imageUrl = kwargs.get('imageUrl', None)
         self.url = kwargs.get('url', None)
-
+        self.review1 = kwargs.get('review1', None)
+        self.review2 = kwargs.get('review2', None)
+        self.review3 = kwargs.get('review3', None)
+        self.features = kwargs.get('features', None)
+        self.features_flavors = kwargs.get('features_flavors', None)
+        
     def __repr__(self):
         return str(self.__dict__)
 
