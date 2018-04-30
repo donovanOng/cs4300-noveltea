@@ -2,16 +2,16 @@ $('.collapse').on('show.bs.collapse', function () {
     var $this = $(this);
     if ($this.attr('data-href')) {
         document.getElementById("collapse" + $this.attr('data-href')).innerHTML =
-            "<div class=\"card card-body\">Loading...</div>";
+            "<div class=\"card card-body p-3\">Loading...</div>";
 
         $.getJSON("getRelatedTeas/?tea_id=" + $this.attr('data-href'), function (teas) {
             if (teas.length == 0) {
-                var teaString = "<div class=\"card card-body bg-light\">"
+                var teaString = "<div class=\"card card-body p-3 bg-light\">"
                 teaString +=
                     "<p class=\"mb-0 font-weight-bold\" style=\"font-size:0.8rem\">Sorry! No similar teas found.</p>";
             } else {
                 var teaString =
-                    "<div class=\"card card-body bg-light\"><p class=\"mb-2 font-weight-bold\">Similar Teas:</p>";
+                    "<div class=\"card card-body p-3 bg-light\"><p class=\"mb-2 font-weight-bold\">Similar Teas:</p>";
                 teas.forEach(function (tea) {
                     tea = JSON.parse(tea)
                     teaString += "<li><a href=\"" + tea.url + "\">" + tea.name +
@@ -171,3 +171,28 @@ $('input').on('beforeItemAdd', function(event) {
     }
 });
 
+// Src: http://jsfiddle.net/iambriansreed/bjdSF/
+var minimized_elements = $('span.minimize');
+    
+minimized_elements.each(function() {    
+    var MAX_CHARS = 150;
+    var t = $(this).text();        
+    if(t.length < MAX_CHARS) return;
+    
+    $(this).html(
+        t.slice(0,MAX_CHARS)+'<span>... </span><a href="#" class="more">More</a>'+
+        '<span style="display:none;">'+ t.slice(MAX_CHARS,t.length)+' <a href="#" class="less">Less</a></span>'
+    );
+    
+}); 
+
+$('a.more', minimized_elements).click(function(event){
+    event.preventDefault();
+    $(this).hide().prev().hide();
+    $(this).next().show();        
+});
+
+$('a.less', minimized_elements).click(function(event){
+    event.preventDefault();
+    $(this).parent().hide().prev().show().prev().show();    
+});

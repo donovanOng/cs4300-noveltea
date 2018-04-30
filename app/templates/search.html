@@ -75,20 +75,21 @@
                                             <h6 class="card-subtitle mb-2 text-muted">by {{ tea.brand }}</h6>
                                             <p class="card-text mb-1">
                                                 <span class="font-weight-bold">Tea Type: </span>{{ tea.teaType }}</p>
-                                            <p class="card-text mb-2">
+                                            <p class="card-text mb-1">
                                                 <span class="font-weight-bold">Flavors: </span>{{ tea.marked_flavors|safe }}</p>
                                             <p class="card-text mb-2">
                                                 <span class="font-weight-bold">Top Review Descriptors: </span>{{ tea.features }}</p>
-                                            <p class="card-text mb-2">
-                                                <a class="" data-toggle="collapse" href="#collapse{{ tea.steepsterID }}" role="button" aria-expanded="false" aria-controls="collapse{{ tea.steepsterID }}">
-                                                    View similar teas
+                                            <hr>
+                                            <p class="card-text mb-0">
+                                                <span class="font-weight-bold">Top Tasting Note: </span><span class="minimize">{{ tea.review1 }}</span>
+                                            </p>
+                                            <hr>
+                                            <p class="card-text mb-3 bg-light text-dark p-2">
+                                                Tried <strong>{{ tea.name }}</strong> before? <a class="" data-toggle="collapse" href="#collapse{{ tea.steepsterID }}" role="button" aria-expanded="false" aria-controls="collapse{{ tea.steepsterID }}">
+                                                    View other similar teas
                                                 </a>
                                             </p>
-                                            <div class="collapse mb-2" data-href="{{ tea.steepsterID }}" id="collapse{{ tea.steepsterID }}"></div>
-                                            <hr>
-                                            <p class="card-text mb-2">
-                                                <span class="font-weight-bold">Top Tasting Note: </span>{{ tea.review1 }}</p>
-                                            <hr>
+                                            <div class="collapse mb-3" data-href="{{ tea.steepsterID }}" id="collapse{{ tea.steepsterID }}"></div>
                                             <p class="card-text mt-2 mb-1 text-muted">For more information,
                                                 <a href="{{ tea.url }}" class="card-link">view {{ tea.name }} on Steepster</a>
                                             </p>
