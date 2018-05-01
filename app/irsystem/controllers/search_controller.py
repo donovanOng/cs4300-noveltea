@@ -52,7 +52,7 @@ def search():
     if q_flavor_raw:
         q_flavor = ", ".join([flavor.title().strip() for flavor in q_flavor_raw.split(",")])
 
-        flavor_OR_query = " OR ".join(["teas.features_flavors LIKE '%" + flavor.title().strip() + "%'" for flavor in q_flavor_raw.split(",")])
+        flavor_OR_query = " OR ".join(["teas.flavors LIKE '%" + flavor.title().strip() + "%'" for flavor in q_flavor_raw.split(",")])
         raw_teas_OR = Tea.query.filter(flavor_OR_query).order_by(Tea.ratingValue.desc())
 
         if raw_teas_OR.count() > 0:
