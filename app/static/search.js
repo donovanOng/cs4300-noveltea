@@ -187,7 +187,7 @@ minimized_elements.each(function() {
     if(t.length < MAX_CHARS) return;
 
     $(this).html(
-        t.slice(0,MAX_CHARS)+'<span>... </span><a href="#" class="more badge badge-primary">More</a>'+
+        t.slice(0,MAX_CHARS)+'<span>... </span><a href="#" class="more">More</a>'+
         '<span style="display:none;">'+ t.slice(MAX_CHARS,t.length)+' <a href="#" class="less badge badge-secondary">Less</a></span>'
     );
 
