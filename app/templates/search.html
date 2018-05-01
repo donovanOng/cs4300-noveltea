@@ -118,9 +118,9 @@
                         {% for teaType in tea_types %}
                         <div class="form-check">
                             {% if teaType[1] == False %}
-                            <input class="form-check-input" type="checkbox" id="id_{{teaType[0]}}" value="{{teaType[0]}}" onclick="checkSubmit('teaType')" checked />
+                            <input class="form-check-input teaTypeCB" type="checkbox" id="id_{{teaType[0]}}" value="{{teaType[0]}}" onclick="checkSubmit('teaType')" checked />
                             {% else %}
-                            <input class="form-check-label" type="checkbox" id="id_{{teaType[0]}}" value="{{teaType[0]}}" onclick="checkSubmit('teaType')">
+                            <input class="form-check-input teaTypeCB" type="checkbox" id="id_{{teaType[0]}}" value="{{teaType[0]}}" onclick="checkSubmit('teaType')">
                             {% endif %}
                             <label class="form-check-label" for="id_{{teaType[0]}}">
                                 {{teaType[0]}} <span class="text-muted">({{teaType[2]}})</span>
@@ -142,9 +142,9 @@
                         {% for caffeine in caffeines %}
                         <div class="form-check">
                             {% if caffeine[1] == False %}
-                            <input class="form-check-input" type="checkbox" id="id_{{caffeine[0]}}" value="{{caffeine[0]}}" onclick="checkSubmit('caffeine')" checked />
+                            <input class="form-check-input caffeineCB" type="checkbox" id="id_{{caffeine[0]}}" value="{{caffeine[0]}}" onclick="checkSubmit('caffeine')" checked />
                             {% else %}
-                            <input class="form-check-input" type="checkbox" id="id_{{caffeine[0]}}" value="{{caffeine[0]}}" onclick="checkSubmit('caffeine')">
+                            <input class="form-check-input caffeineCB" type="checkbox" id="id_{{caffeine[0]}}" value="{{caffeine[0]}}" onclick="checkSubmit('caffeine')">
                             {% endif %}
                             <label class="form-check-label" for="id_{{caffeine[0]}}">
                                 {{caffeine[0]}} <span class="text-muted">({{caffeine[2]}})</span>

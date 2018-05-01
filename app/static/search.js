@@ -46,7 +46,7 @@ var to_index_file = use_features ? "/static/data/features_to_index.json" : "/sta
 $.getJSON(to_index_file, function (json) {
     flavor_to_index = json;
 
-    $("input")
+    $(".bootstrap-tagsinput input")
     // don't navigate away from the field on tab when selecting an item
     .on("keydown", function (event) {
         if (event.keyCode === $.ui.keyCode.TAB &&
