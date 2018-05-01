@@ -113,9 +113,9 @@
                         {% endif %}
                         <input type="hidden" name="notTeaTypes" value="" id="teaTypeFilter" />
                         {% for teaType in tea_types %}
-                        <div class="form-checck">
+                        <div class="form-check">
                             {% if teaType[1] == False %}
-                            <input class="form-check-label" type="checkbox" id="id_{{teaType[0]}}" value="{{teaType[0]}}" onclick="checkSubmit('teaType')" checked />
+                            <input class="form-check-input" type="checkbox" id="id_{{teaType[0]}}" value="{{teaType[0]}}" onclick="checkSubmit('teaType')" checked />
                             {% else %}
                             <input class="form-check-label" type="checkbox" id="id_{{teaType[0]}}" value="{{teaType[0]}}" onclick="checkSubmit('teaType')">
                             {% endif %}
