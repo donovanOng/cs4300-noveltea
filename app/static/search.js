@@ -1,3 +1,5 @@
+var use_features = false;
+
 $('.collapse').on('show.bs.collapse', function () {
     var $this = $(this);
     if ($this.attr('data-href')) {
@@ -36,11 +38,12 @@ function checkSubmit(filterType) {
     $("#" + filterType + 'Form').submit();
 }
 
-// Co_occurence matrix used 
+// Co_occurence matrix used
 var flavs = $("#search_input").tagsinput('items').itemsArray;
 var flavor_to_index, index_to_flavor, cooc;
 
-$.getJSON("/static/data/flavor_to_index.json", function (json) {
+var to_index_file = use_features ? "/static/data/features_to_index.json" : "/static/data/flavor_to_index.json"
+$.getJSON(to_index_file, function (json) {
     flavor_to_index = json;
 
     $("input")
@@ -76,11 +79,15 @@ $.getJSON("/static/data/flavor_to_index.json", function (json) {
     });
 });
 
-$.getJSON("/static/data/index_to_flavor.json", function (json) {
+var index_to_file = use_features ? "/static/data/index_to_features.json" : "/static/data/index_to_flavor.json"
+$.getJSON(index_to_file, function (json) {
     index_to_flavor = json;
 });
 
-$.get("/static/data/co_oc.txt", function (csv) {
+
+//CHANGE
+var co_oc_file = use_features ? "/static/data/co_oc_features.txt" : "/static/data/co_oc.txt"
+$.get(co_oc_file, function (csv) {
     cooc = csv;
     cooc = cooc.trim();
     cooc = JSON.parse(cooc);
@@ -164,7 +171,7 @@ function extractLast(term) {
     return split(term).pop();
 }
 
-$('input').on('beforeItemAdd', function(event) { 
+$('input').on('beforeItemAdd', function(event) {
     var flavors = Object.keys(flavor_to_index).map(x => x.toLowerCase())
     if (flavors.indexOf(event.item) < 0) {
         event.cancel = true
@@ -173,26 +180,26 @@ $('input').on('beforeItemAdd', function(event) {
 
 // Src: http://jsfiddle.net/iambriansreed/bjdSF/
 var minimized_elements = $('span.minimize');
-    
-minimized_elements.each(function() {    
+
+minimized_elements.each(function() {
     var MAX_CHARS = 150;
-    var t = $(this).text();        
+    var t = $(this).text();
     if(t.length < MAX_CHARS) return;
-    
+
     $(this).html(
-        t.slice(0,MAX_CHARS)+'<span>... </span><a href="#" class="more">More</a>'+
-        '<span style="display:none;">'+ t.slice(MAX_CHARS,t.length)+' <a href="#" class="less">Less</a></span>'
+        t.slice(0,MAX_CHARS)+'<span>... </span><a href="#" class="more badge badge-primary">More</a>'+
+        '<span style="display:none;">'+ t.slice(MAX_CHARS,t.length)+' <a href="#" class="less badge badge-secondary">Less</a></span>'
     );
-    
-}); 
+
+});
 
 $('a.more', minimized_elements).click(function(event){
     event.preventDefault();
     $(this).hide().prev().hide();
-    $(this).next().show();        
+    $(this).next().show();
 });
 
 $('a.less', minimized_elements).click(function(event){
     event.preventDefault();
-    $(this).parent().hide().prev().show().prev().show();    
+    $(this).parent().hide().prev().show().prev().show();
 });

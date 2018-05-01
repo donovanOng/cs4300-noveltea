@@ -111,7 +111,6 @@ def search():
                 else:
                     marked_flavors += flavor + ", "
             tea.marked_flavors = matched_flavors + marked_flavors[:-2]
-            tea.review1_trimmed = tea.review1[:120] + "..."
             results.append(tea)
 
         pagination = Pagination(page=page, total=total, per_page=10,
