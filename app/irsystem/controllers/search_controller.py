@@ -256,7 +256,7 @@ def hits_rank(matchFlavors):
 
     import networkx as nx
     G = nx.from_pandas_edgelist(results, 'author_url', 'id', create_using=nx.DiGraph())
-    h, a = nx.hits(G, max_iter=10000)
+    h, a = nx.hits(G, max_iter=5000)
     top_teas = {teaid: a[teaid] for teaid in results.id.unique()}
     return sorted(top_teas, key=top_teas.get, reverse=True)
 
