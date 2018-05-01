@@ -4,7 +4,7 @@ from app.irsystem.models.tea import *
 if not Tea.query.get(1):
     print "No tea in database"
     import csv
-    with open("./data/complete.csv", "rb") as csvfile:
+    with open("./data/scraper/clean_data.csv", "rb") as csvfile:
         reader = csv.reader(csvfile)
         header = next(reader)
         tea_data = {}

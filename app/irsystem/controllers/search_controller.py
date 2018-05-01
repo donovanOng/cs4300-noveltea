@@ -55,8 +55,8 @@ def search():
         flavor_OR_query = " OR ".join(["teas.flavors LIKE '%" + flavor.title().strip() + "%'" for flavor in q_flavor_raw.split(",")])
         raw_teas_OR = Tea.query.filter(flavor_OR_query).order_by(Tea.ratingValue.desc())
 
-        if raw_teas_OR.count() > 0:   
-            
+        if raw_teas_OR.count() > 0:
+
             q_flavor_title = [flavor.title().strip() for flavor in q_flavor_raw.split(",")]
             tea_ids_matched = []
             for num_match in reversed(range(1, len(q_flavor_title)+1)):
@@ -82,7 +82,7 @@ def search():
         else:
             raw_teas = raw_teas_OR
 
-        # Filters 
+        # Filters
         tea_types = [tea.teaType for tea in raw_teas.all()] if raw_teas.all() else []
         tea_types = Counter(tea_types)
         tea_types = [(teaType, teaType in f_teaType.split(","), count) for teaType, count in tea_types.iteritems()]
@@ -111,14 +111,15 @@ def search():
                 else:
                     marked_flavors += flavor + ", "
             tea.marked_flavors = matched_flavors + marked_flavors[:-2]
+            tea.review1_trimmed = tea.review1[:120] + "..."
             results.append(tea)
 
-        pagination = Pagination(page=page, total=total, per_page=10, 
+        pagination = Pagination(page=page, total=total, per_page=10,
                                 bs_version=4, record_name="teas")
 
-    return render_template('search.html', name=project_name, netid=net_id, 
-                            query=q_flavor, teas=results, 
-                            pagination=pagination, page=(page-1)*10, 
+    return render_template('search.html', name=project_name, netid=net_id,
+                            query=q_flavor, teas=results,
+                            pagination=pagination, page=(page-1)*10,
                             multi_query=len(q_flavor.split(','))>1,
                             version=request.args.get('version'),
                             tea_types=tea_types, caffeines=caffeines,
@@ -147,7 +148,7 @@ def search_v2():
         flavor_OR_query = " OR ".join(["teas.flavors LIKE '%" + flavor.title().strip() + "%'" for flavor in q_flavor_raw.split(",")])
         raw_teas_OR = Tea.query.filter(flavor_OR_query).order_by(Tea.ratingValue.desc())
 
-        if (raw_teas_AND.count() + raw_teas_OR.count()) > 0:            
+        if (raw_teas_AND.count() + raw_teas_OR.count()) > 0:
             if HITS_RANK:
                 print "Found {} teas".format(raw_teas_AND.count() + raw_teas_OR.count())
                 hits_ranked_AND = hits_rank([tea.steepsterID for tea in raw_teas_AND.all()])
@@ -165,7 +166,7 @@ def search_v2():
         else:
             raw_teas = raw_teas_AND
 
-        # Filters 
+        # Filters
         tea_types = [tea.teaType for tea in raw_teas.all()] if raw_teas.all() else []
         tea_types = sorted(list(set(tea_types)))
         tea_types = [(teaType, teaType in f_teaType.split(",")) for teaType in tea_types]
@@ -181,12 +182,12 @@ def search_v2():
 
         total = raw_teas.count()
         teas = raw_teas.offset((page-1)*10).limit(10)
-            
-        pagination = Pagination(page=page, total=total, per_page=10, 
+
+        pagination = Pagination(page=page, total=total, per_page=10,
                                 bs_version=4, record_name="teas")
 
-    return render_template('search_v2.html', name=project_name, netid=net_id, 
-                            query=q_flavor, teas=teas, 
+    return render_template('search_v2.html', name=project_name, netid=net_id,
+                            query=q_flavor, teas=teas,
                             pagination=pagination,
                             version=request.args.get('version'),
                             tea_types=tea_types, caffeines=caffeines,
@@ -219,22 +220,22 @@ def search_v1():
         total = raw_teas.count()
         teas = raw_teas.offset((page-1)*10).limit(10)
 
-        pagination = Pagination(page=page, total=total, per_page=10, 
+        pagination = Pagination(page=page, total=total, per_page=10,
                                 bs_version=4, record_name="teas")
 
-    return render_template('search_v1.html', name=project_name, netid=net_id, 
-                            query=q_flavor, teas=teas, 
+    return render_template('search_v1.html', name=project_name, netid=net_id,
+                            query=q_flavor, teas=teas,
                             pagination=pagination,
                             version=request.args.get('version'))
 
 def query_tea_with_same_label(q_id):
     '''
-    This function takes a query of tea id 
+    This function takes a query of tea id
     and return a list of id of similar teas.
-    
+
     params:
     q_id: integer, the id of the tea which you want to find teas similar with
-    
+
     return:
     list: a list of id of similar teas
     '''
