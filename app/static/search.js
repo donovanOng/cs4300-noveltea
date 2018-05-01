@@ -1,4 +1,4 @@
-var use_features = true;
+var use_features = false;
 
 $('.collapse').on('show.bs.collapse', function () {
     var $this = $(this);
@@ -77,13 +77,6 @@ $.getJSON(to_index_file, function (json) {
             return false;
         }
     });
-
-    $('input').on('beforeItemAdd', function(event) {
-        var flavors = Object.keys(flavor_to_index).map(x => x.toLowerCase())
-        if (flavors.indexOf(event.item.toLowerCase()) < 0) {
-            event.cancel = true
-        }
-    });
 });
 
 var index_to_file = use_features ? "/static/data/index_to_features.json" : "/static/data/index_to_flavor.json"
@@ -138,7 +131,7 @@ function getComplements(flavors_query, topx) {
 
     topflavorsIndices.forEach(function (d) {
         if (sum_flavors[d] > 0) {
-            topflavors.push(index_to_flavor[d].toLowerCase());
+            topflavors.push(index_to_flavor[d]);
         }
     })
     return topflavors;
@@ -177,6 +170,13 @@ function split(val) {
 function extractLast(term) {
     return split(term).pop();
 }
+
+$('input').on('beforeItemAdd', function(event) {
+    var flavors = Object.keys(flavor_to_index).map(x => x.toLowerCase())
+    if (flavors.indexOf(event.item) < 0) {
+        event.cancel = true
+    }
+});
 
 // Src: http://jsfiddle.net/iambriansreed/bjdSF/
 var minimized_elements = $('span.minimize');
