@@ -62,7 +62,7 @@ def search():
             for num_match in reversed(range(1, len(q_flavor_title)+1)):
                 tea_ids = []
                 for tea in raw_teas_OR.all():
-                    flavor_matches = sum([1 for flavor in tea.flavors.split(",") if flavor.strip() in q_flavor_title])
+                    flavor_matches = sum([1 for flavor in tea.features_flavors.split(",") if flavor.strip() in q_flavor_title])
                     if num_match == flavor_matches:
                         tea_ids.append(tea.steepsterID)
                 tea_ids_matched.append(tea_ids)
@@ -111,6 +111,15 @@ def search():
                 else:
                     marked_flavors += flavor + ", "
             tea.marked_flavors = matched_flavors + marked_flavors[:-2]
+
+            matched_flavors = ""
+            marked_flavors = ""
+            for flavor in tea.features.split(','):
+                if flavor.strip() in q_flavor_title:
+                    matched_flavors += "<span class=\"marked\">" + flavor.strip() + "</span> "
+                else:
+                    marked_flavors += flavor + ", "
+            tea.marked_features = matched_flavors + marked_flavors[:-2]
             results.append(tea)
 
         pagination = Pagination(page=page, total=total, per_page=10,

@@ -26,9 +26,6 @@
                 <p class="lead"></p>
                 <form>
                     <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon3">Flavors</span>
-                        </div>
                         <input type="text" name="flavor" class="form-control" id="search_input" onchange='showComplements()' aria-describedby="basic-addon3"
                             data-role="tagsinput" placeholder="citrus, floral...">
                         <button id="btn-search" type="submit" class="btn btn-gold">
@@ -78,7 +75,7 @@
                                             <p class="card-text mb-1">
                                                 <span class="font-weight-bold">Flavors: </span>{{ tea.marked_flavors|safe }}</p>
                                             <p class="card-text mb-2">
-                                                <span class="font-weight-bold">Top Review Descriptors: </span>{{ tea.features }}</p>
+                                                <span class="font-weight-bold">Top Review Descriptors: </span>{{ tea.marked_features|safe }}</p>
                                             <hr>
                                             <p class="card-text mb-0">
                                                 <span class="font-weight-bold">Top Tasting Note: </span>
