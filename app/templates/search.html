@@ -43,10 +43,10 @@
             </div>
             <div class="search-result col-lg-8 mt-4">
                 {% if query %}
-                <div class="row align-items-center pl-3 pr-3">
-                    <div class="col-md-7 bg-light p-3">
+                <div class="row align-items-center bg-light pl-3 pr-3" style="margin:0 0px;">
+                    <div class="col-md-7 p-3">
                         <h5 class="m-0">
-                            <small class="text-muted">Best tea with</small>
+                            <small class="text-muted">Best teas with</small>
                             <span class="ft-green">{{query}}</span>
                             {% if multi_query %}
                             <small class="text-muted">flavors</small>
@@ -55,7 +55,7 @@
                             {% endif %}
                         </h5>
                     </div>
-                    <div class="col-md-5 bg-light text-right" style="padding: 1.15rem!important">
+                    <div class="col-md-5 text-right" style="padding: 1.15rem!important">
                         <small class="text-muted">{{ pagination.info }}</small>
                     </div>
                 </div>
