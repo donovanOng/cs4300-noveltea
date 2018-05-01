@@ -1,4 +1,4 @@
-var use_features = false;
+var use_features = true;
 
 $('.collapse').on('show.bs.collapse', function () {
     var $this = $(this);
@@ -77,6 +77,13 @@ $.getJSON(to_index_file, function (json) {
             return false;
         }
     });
+
+    $('input').on('beforeItemAdd', function(event) {
+        var flavors = Object.keys(flavor_to_index).map(x => x.toLowerCase())
+        if (flavors.indexOf(event.item.toLowerCase()) < 0) {
+            event.cancel = true
+        }
+    });
 });
 
 var index_to_file = use_features ? "/static/data/index_to_features.json" : "/static/data/index_to_flavor.json"
@@ -131,7 +138,7 @@ function getComplements(flavors_query, topx) {
 
     topflavorsIndices.forEach(function (d) {
         if (sum_flavors[d] > 0) {
-            topflavors.push(index_to_flavor[d]);
+            topflavors.push(index_to_flavor[d].toLowerCase());
         }
     })
     return topflavors;
@@ -171,13 +178,6 @@ function extractLast(term) {
     return split(term).pop();
 }
 
-$('input').on('beforeItemAdd', function(event) {
-    var flavors = Object.keys(flavor_to_index).map(x => x.toLowerCase())
-    if (flavors.indexOf(event.item) < 0) {
-        event.cancel = true
-    }
-});
-
 // Src: http://jsfiddle.net/iambriansreed/bjdSF/
 var minimized_elements = $('span.minimize');
 
@@ -188,7 +188,7 @@ minimized_elements.each(function() {
 
     $(this).html(
         t.slice(0,MAX_CHARS)+'<span>... </span><a href="#" class="more">More</a>'+
-        '<span style="display:none;">'+ t.slice(MAX_CHARS,t.length)+' <a href="#" class="less badge badge-secondary">Less</a></span>'
+        '<span style="display:none;">'+ t.slice(MAX_CHARS,t.length)+' <a href="#" class="less">Less</a></span>'
     );
 
 });
