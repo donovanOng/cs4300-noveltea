@@ -1,4 +1,4 @@
-var use_features = false;
+var use_features = true;
 
 $('.collapse').on('show.bs.collapse', function () {
     var $this = $(this);
@@ -26,14 +26,16 @@ $('.collapse').on('show.bs.collapse', function () {
     }
 })
 
-function checkSubmit(filterType) {
-    var filterList = $('.' + filterType + 'CB:not(:checked)').map(function () {
+function checkSubmit(filterType, notAll=true) {
+    var filterList = $('.' + filterType + 'CB:checked').map(function () {
         return this.value;
     }).get().join(',');
-    if (filterList) {
-        $("#" + filterType + "Filter").val(filterList);
-    } else {
-        $("#" + filterType + "Filter").remove();
+    if (notAll) {
+        if (filterList) {
+            $("#" + filterType + "Filter").val(filterList);
+        } else {
+            $("#" + filterType + "Filter").remove();
+        }
     }
     $("#" + filterType + 'Form').submit();
 }
@@ -131,7 +133,7 @@ function getComplements(flavors_query, topx) {
 
     topflavorsIndices.forEach(function (d) {
         if (sum_flavors[d] > 0) {
-            topflavors.push(index_to_flavor[d]);
+            topflavors.push(index_to_flavor[d].toLowerCase());
         }
     })
     return topflavors;

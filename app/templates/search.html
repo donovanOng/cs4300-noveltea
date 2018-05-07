@@ -27,7 +27,7 @@
                 <form>
                     <div class="input-group">
                         <input type="text" name="flavor" class="form-control" id="search_input" onchange='showComplements()' aria-describedby="basic-addon3"
-                            data-role="tagsinput" placeholder="citrus, floral...">
+                            data-role="tagsinput" placeholder="citrus, floral..." value="{{ query }}">
                         <button id="btn-search" type="submit" class="btn btn-gold">
                             <span class="oi oi-magnifying-glass"></span>
                         </button>
@@ -40,19 +40,8 @@
             </div>
             <div class="search-result col-lg-8 mt-4">
                 {% if query %}
-                <div class="row align-items-center bg-light pl-3 pr-3" style="margin:0 0px;">
-                    <div class="col-md-7 p-3">
-                        <h5 class="m-0">
-                            <small class="text-muted">Best teas with</small>
-                            <span class="ft-green">{{query}}</span>
-                            {% if multi_query %}
-                            <small class="text-muted">flavors</small>
-                            {% else %}
-                            <small class="text-muted">flavor</small>
-                            {% endif %}
-                        </h5>
-                    </div>
-                    <div class="col-md-5 text-right" style="padding: 1.15rem!important">
+                <div class="row align-items-center" style="margin:0 0px;">
+                    <div class="col-md-12 text-right">
                         <small class="text-muted">{{ pagination.info }}</small>
                     </div>
                 </div>
@@ -71,7 +60,7 @@
                                                 <span class="text-muted mr-1 font-weight-light">{{loop.index0+1+page}}.</span>{{ tea.name }}</h5>
                                             <h6 class="card-subtitle mb-2 text-muted">by {{ tea.brand }}</h6>
                                             <p class="card-text mb-1">
-                                                <span class="font-weight-bold">Tea Type: </span>{{ tea.teaType }}</p>
+                                                <span class="font-weight-bold">Tea Type: </span>{{ tea.marked_teaType|safe }}</p>
                                             <p class="card-text mb-1">
                                                 <span class="font-weight-bold">Flavors: </span>{{ tea.marked_flavors|safe }}</p>
                                             <p class="card-text mb-2">
@@ -103,30 +92,6 @@
             </div>
             {% if teas %}
             <div class="filters col-lg-4 mt-4 d-none d-lg-block">
-                {% if tea_types %}
-                <div class="filter-box mb-3 bg-light p-3">
-                    <h6 class="mb-1 ft-green">Tea Type</h6>
-                    <form id="teaTypeForm" class="mb-0">
-                        <input type="hidden" name="flavor" value="{{ query }}" />
-                        {% if f_caffeine %}
-                        <input type="hidden" name="notCaffeines" value="{{ f_caffeine }}" />
-                        {% endif %}
-                        <input type="hidden" name="notTeaTypes" value="" id="teaTypeFilter" />
-                        {% for teaType in tea_types %}
-                        <div class="form-check">
-                            {% if teaType[1] == False %}
-                            <input class="form-check-input teaTypeCB" type="checkbox" id="id_{{teaType[0]}}" value="{{teaType[0]}}" onclick="checkSubmit('teaType')" checked />
-                            {% else %}
-                            <input class="form-check-input teaTypeCB" type="checkbox" id="id_{{teaType[0]}}" value="{{teaType[0]}}" onclick="checkSubmit('teaType')">
-                            {% endif %}
-                            <label class="form-check-label" for="id_{{teaType[0]}}">
-                                {{teaType[0]}} <span class="text-muted">({{teaType[2]}})</span>
-                            </label>
-                        </div>
-                        {% endfor %}
-                    </form>
-                </div>
-                {% endif %}
                 {% if caffeines %}
                 <div class="filter-box mb-3 bg-light p-3">
                     <h6 class="mb-1 ft-green">Caffeine</h6>
@@ -135,16 +100,60 @@
                         {% if f_teaType %}
                         <input type="hidden" name="notTeaTypes" value="{{ f_teaType }}" />
                         {% endif %}
-                        <input type="hidden" name="notCaffeines" value="" id="caffeineFilter" />
+                        <input type="hidden" name="caffeines" value="" id="caffeineFilter" />
+                        <div class="form-check">
+                            {% if f_caffeine %}
+                            <input class="form-check-input caffeineCB" type="checkbox" id="id_caffeineAll" value="all" onclick="checkSubmit('caffeine',false)" />
+                            {% else %}
+                            <input class="form-check-input caffeineCB" type="checkbox" id="id_caffeineAll" value="all" disabled checked />
+                            {% endif %}
+                            <label class="form-check-label" for="id_caffeineAll">
+                                Select All
+                            </label>
+                        </div>
                         {% for caffeine in caffeines %}
                         <div class="form-check">
-                            {% if caffeine[1] == False %}
+                            {% if caffeine[1] == True %}
                             <input class="form-check-input caffeineCB" type="checkbox" id="id_{{caffeine[0]}}" value="{{caffeine[0]}}" onclick="checkSubmit('caffeine')" checked />
                             {% else %}
                             <input class="form-check-input caffeineCB" type="checkbox" id="id_{{caffeine[0]}}" value="{{caffeine[0]}}" onclick="checkSubmit('caffeine')">
                             {% endif %}
                             <label class="form-check-label" for="id_{{caffeine[0]}}">
                                 {{caffeine[0]}} <span class="text-muted">({{caffeine[2]}})</span>
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </form>
+                </div>
+                {% endif %}
+                {% if tea_types %}
+                <div class="filter-box mb-3 bg-light p-3">
+                    <h6 class="mb-1 ft-green">Tea Type</h6>
+                    <form id="teaTypeForm" class="mb-0">
+                        <input type="hidden" name="flavor" value="{{ query }}" />
+                        {% if f_caffeine %}
+                        <input type="hidden" name="notCaffeines" value="{{ f_caffeine }}" />
+                        {% endif %}
+                        <input type="hidden" name="teaTypes" value="" id="teaTypeFilter" />
+                        <div class="form-check">
+                            {% if f_teaType %}
+                            <input class="form-check-input teaTypeCB" type="checkbox" id="id_teaTypeAll" value="all" onclick="checkSubmit('teaType',false)" />
+                            {% else %}
+                            <input class="form-check-input teaTypeCB" type="checkbox" id="id_teaTypeAll" value="all" disabled checked />
+                            {% endif %}
+                            <label class="form-check-label" for="id_teaTypeAll">
+                                Select All
+                            </label>
+                        </div>
+                        {% for teaType in tea_types %}
+                        <div class="form-check">
+                            {% if teaType[1] == True %}
+                            <input class="form-check-input teaTypeCB" type="checkbox" id="id_{{teaType[0]}}" value="{{teaType[0]}}" onclick="checkSubmit('teaType')" checked />
+                            {% else %}
+                            <input class="form-check-input teaTypeCB" type="checkbox" id="id_{{teaType[0]}}" value="{{teaType[0]}}" onclick="checkSubmit('teaType')">
+                            {% endif %}
+                            <label class="form-check-label" for="id_{{teaType[0]}}">
+                                {{teaType[0]}} <span class="text-muted">({{teaType[2]}})</span>
                             </label>
                         </div>
                         {% endfor %}

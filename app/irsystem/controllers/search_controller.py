@@ -9,6 +9,8 @@ from settings import *
 
 from . import *
 
+import time
+
 project_name = "noveltea"
 members_name = "Benjamin Stevens, Bowen Gao, Joshua Lee:, Sasha Badov, Yong Lin Ong"
 net_id = "bls235, bg453, jhl298, sb965, yo228"
@@ -36,8 +38,8 @@ def getRelatedTeas():
 
 def search():
     q_flavor_raw = request.args.get('flavor')
-    f_teaType = request.args.get('notTeaTypes', "")
-    f_caffeine = request.args.get('notCaffeines', "")
+    f_teaType = request.args.get('teaTypes', "")
+    f_caffeine = request.args.get('caffeines', "")
     page = request.args.get(get_page_parameter(), type=int, default=1)
 
     pagination = None
@@ -49,10 +51,12 @@ def search():
     # Filters
     tea_types, caffeines = [], []
 
-    if q_flavor_raw:
-        q_flavor = ", ".join([flavor.title().strip() for flavor in q_flavor_raw.split(",")])
+    start_time = time.time()
 
-        flavor_OR_query = " OR ".join(["teas.flavors LIKE '%" + flavor.title().strip() + "%'" for flavor in q_flavor_raw.split(",")])
+    if q_flavor_raw:
+        q_flavor = ", ".join([flavor.strip() for flavor in q_flavor_raw.split(",")])
+
+        flavor_OR_query = " OR ".join(["teas.features_flavors LIKE '%" + flavor.title().strip() + "%'" for flavor in q_flavor_raw.split(",")])
         raw_teas_OR = Tea.query.filter(flavor_OR_query).order_by(Tea.ratingValue.desc())
 
         if raw_teas_OR.count() > 0:
@@ -62,10 +66,13 @@ def search():
             for num_match in reversed(range(1, len(q_flavor_title)+1)):
                 tea_ids = []
                 for tea in raw_teas_OR.all():
-                    flavor_matches = sum([1 for flavor in tea.features_flavors.split(",") if flavor.strip() in q_flavor_title])
+                    features_flavors = set([ff.strip() for ff in tea.features_flavors.split(",")])
+                    flavor_matches = sum([1 for ff in features_flavors if ff in q_flavor_title])
                     if num_match == flavor_matches:
                         tea_ids.append(tea.steepsterID)
                 tea_ids_matched.append(tea_ids)
+
+            print("Time to matched query:", time.time()-start_time)
 
             if HITS_RANK:
                 hits_ranked_tea_id = []
@@ -74,53 +81,69 @@ def search():
                     hits_ranked_tea_id.extend(hits_ranked_teas)
                 raw_teas = Tea.query.filter(Tea.steepsterID.in_(hits_ranked_tea_id)).order_by(ordering_sql(hits_ranked_tea_id))
 
+                print("Time to finish HITS:", time.time()-start_time)
+
             else:
                 ranked_tea_id = []
                 for tea_ids in tea_ids_matched:
                     ranked_tea_id.extend(tea_ids)
                 raw_teas = Tea.query.filter(Tea.steepsterID.in_(ranked_tea_id)).order_by(ordering_sql(ranked_tea_id))
+
+            # Build Filters
+            tea_types = [tea.teaType for tea in raw_teas.all()] if raw_teas.all() else []
+            tea_types = Counter(tea_types)
+            tea_types = [(teaType, teaType in f_teaType.split(","), count) for teaType, count in tea_types.iteritems()]
+            tea_types = sorted(tea_types, key=lambda tea: tea[0])
+
+            caffeines = [tea.caffeine for tea in raw_teas.all()] if raw_teas.all() else []
+            caffeines = Counter(caffeines)
+            caffeines = [(caffeine, caffeine in f_caffeine.split(","), count) for caffeine, count in caffeines.iteritems()]
+            caffeines = sorted(caffeines, key=lambda caffeine: caffeine[0])
+
+            if f_teaType and f_teaType != "all":
+                raw_teas_OR = raw_teas.filter(Tea.teaType.in_(f_teaType.split(",")))
+            if f_caffeine and f_caffeine != "all":
+                raw_teas_OR = raw_teas.filter(Tea.caffeine.in_(f_caffeine.split(",")))
+            
+            print("Time to finish filtering:", time.time()-start_time)
+            
+            total = raw_teas.count()
+            teas = raw_teas.offset((page-1)*10).limit(10)
+
+            results = []
+            for tea in teas:
+                current_search_query = [t for t in q_flavor_title]
+                matched_flavors = ""
+                marked_flavors = ""
+                for flavor in tea.flavors.split(','):
+                    if current_search_query and flavor.strip() in current_search_query:
+                        matched_flavors += "<span class=\"marked\">" + flavor.strip() + "</span> "
+                        current_search_query.remove(flavor.strip())
+                    else:
+                        marked_flavors += flavor + ", "
+                tea.marked_flavors = matched_flavors + marked_flavors[:-2]
+
+                matched_flavors = ""
+                marked_flavors = ""
+                for flavor in tea.features.split(','):
+                    if current_search_query and flavor.strip() in current_search_query:
+                        matched_flavors += "<span class=\"marked\">" + flavor.strip() + "</span> "
+                        current_search_query.remove(flavor.strip())
+                    else:
+                        marked_flavors += flavor + ", "
+                tea.marked_features = matched_flavors + marked_flavors[:-2]
+
+                if current_search_query and tea.teaType.strip() in current_search_query:
+                    teaType = "<span class=\"marked\">" + tea.teaType.strip() + "</span> "
+                else:
+                    teaType = tea.teaType.strip()
+                tea.marked_teaType = teaType
+                results.append(tea)
+
+            print("Time to finish marking query:", time.time()-start_time)
+        
         else:
             raw_teas = raw_teas_OR
-
-        # Filters
-        tea_types = [tea.teaType for tea in raw_teas.all()] if raw_teas.all() else []
-        tea_types = Counter(tea_types)
-        tea_types = [(teaType, teaType in f_teaType.split(","), count) for teaType, count in tea_types.iteritems()]
-        tea_types = sorted(tea_types, key=lambda tea: tea[0])
-
-        caffeines = [tea.caffeine for tea in raw_teas.all()] if raw_teas.all() else []
-        caffeines = Counter(caffeines)
-        caffeines = [(caffeine, caffeine in f_caffeine.split(","), count) for caffeine, count in caffeines.iteritems()]
-        caffeines = sorted(caffeines, key=lambda caffeine: caffeine[0])
-
-        if f_teaType:
-            raw_teas = raw_teas.filter(~Tea.teaType.in_(f_teaType.split(",")))
-        if f_caffeine:
-            raw_teas = raw_teas.filter(~Tea.caffeine.in_(f_caffeine.split(",")))
-
-        total = raw_teas.count()
-        teas = raw_teas.offset((page-1)*10).limit(10)
-
-        results = []
-        for tea in teas:
-            matched_flavors = ""
-            marked_flavors = ""
-            for flavor in tea.flavors.split(','):
-                if flavor.strip() in q_flavor_title:
-                    matched_flavors += "<span class=\"marked\">" + flavor.strip() + "</span> "
-                else:
-                    marked_flavors += flavor + ", "
-            tea.marked_flavors = matched_flavors + marked_flavors[:-2]
-
-            matched_flavors = ""
-            marked_flavors = ""
-            for flavor in tea.features.split(','):
-                if flavor.strip() in q_flavor_title:
-                    matched_flavors += "<span class=\"marked\">" + flavor.strip() + "</span> "
-                else:
-                    marked_flavors += flavor + ", "
-            tea.marked_features = matched_flavors + marked_flavors[:-2]
-            results.append(tea)
 
         pagination = Pagination(page=page, total=total, per_page=10,
                                 bs_version=4, record_name="teas")
@@ -258,6 +281,7 @@ def query_tea_with_same_label(q_id):
 def hits_rank(matchFlavors):
 
     if not matchFlavors: return []
+    if len(matchFlavors) == 1: return matchFlavors
 
     import pandas as pd
     reviews = pd.read_csv(os.path.join(APP_ROOT, "data/reviews_top_10k.csv") )
@@ -265,7 +289,7 @@ def hits_rank(matchFlavors):
 
     import networkx as nx
     G = nx.from_pandas_edgelist(results, 'author_url', 'id', create_using=nx.DiGraph())
-    h, a = nx.hits(G, max_iter=5000)
+    h, a = nx.hits(G, max_iter=2000)
     top_teas = {teaid: a[teaid] for teaid in results.id.unique()}
     return sorted(top_teas, key=top_teas.get, reverse=True)
 
