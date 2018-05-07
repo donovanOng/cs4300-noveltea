@@ -63,8 +63,10 @@
                                                 <span class="font-weight-bold">Tea Type: </span>{{ tea.marked_teaType|safe }}</p>
                                             <p class="card-text mb-1">
                                                 <span class="font-weight-bold">Flavors: </span>{{ tea.marked_flavors|safe }}</p>
+                                            {% if tea.marked_features %}
                                             <p class="card-text mb-2">
                                                 <span class="font-weight-bold">Top Review Descriptors: </span>{{ tea.marked_features|safe }}</p>
+                                            {% endif %}
                                             <hr>
                                             <p class="card-text mb-0">
                                                 <span class="font-weight-bold">Top Tasting Note: </span>
