@@ -101,9 +101,9 @@ def search():
             caffeines = sorted(caffeines, key=lambda caffeine: caffeine[0])
 
             if f_teaType and f_teaType != "all":
-                raw_teas_OR = raw_teas.filter(Tea.teaType.in_(f_teaType.split(",")))
+                raw_teas = raw_teas.filter(Tea.teaType.in_(f_teaType.split(",")))
             if f_caffeine and f_caffeine != "all":
-                raw_teas_OR = raw_teas.filter(Tea.caffeine.in_(f_caffeine.split(",")))
+                raw_teas = raw_teas.filter(Tea.caffeine.in_(f_caffeine.split(",")))
             
             print("Time to finish filtering:", time.time()-start_time)
             
