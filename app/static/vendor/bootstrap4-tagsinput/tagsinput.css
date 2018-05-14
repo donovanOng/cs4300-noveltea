@@ -7,13 +7,17 @@
     background-color: #fff;
     border: 1px solid #ccc;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    display: inline-block;
+    display: flex;
     padding: 8px 6px;
     color: #555;
     vertical-align: middle;
     flex: 1 1 auto;
     line-height: 22px;
     cursor: text;
+    border-radius: 3px 0 0 3px;
+    max-width: 90%;
+    flex-wrap: nowrap;
+    overflow: scroll;
 }
 .bootstrap-tagsinput input {
     border: none;
@@ -42,9 +46,8 @@
 .bootstrap-tagsinput .badge {
     margin-right: 2px;
     color: white;
-    flex: 1 1 auto;
     padding: 8px 8px;
-    border-radius:3px;
+    border-radius: 3px;
 }
 .bootstrap-tagsinput .badge [data-role="remove"] {
     margin-left: 8px;
